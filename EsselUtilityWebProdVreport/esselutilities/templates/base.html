@@ -344,6 +344,14 @@
                         </a>
                     </li>
                     {%endif%}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Upload' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me" id="report_menu">
+                        <a href="{% url 'report:records_landing_page' %}">
+                            <!-- <i class="fa fa-gavel"></i> --> Report
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
                     {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'System User' == 'true' %}
                     <li class="menu-dropdown classic-menu-dropdown active-me text-center" id="system_user_menu"
                         style="width: 20%;    padding-top: 10px !important;">
