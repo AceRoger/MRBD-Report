@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+{%load staticfiles%}
+{% load billCycleFilter %}
+<head>
+    <meta charset="utf-8"/>
+    <title>Essel | Userlist</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/simple-line-icons/simple-line-icons.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/uniform/css/uniform.default.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="{%static 'assets/global/plugins/datatables/datatables.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css'%}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'%}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap-toastr/toastr.min.css'%}" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{%static 'assets/global/css/components.min.css'%}" rel="stylesheet" id="style_components"
+          type="text/css"/>
+    <link href="{%static 'assets/global/css/plugins.min.css'%}" rel="stylesheet" type="text/css"/>
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="{%static 'assets/layouts/layout3/css/layout.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/themes/default.min.css'%}" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="{%static 'assets/layouts/layout3/css/custom.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/ev_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/eu_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/es_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <!--<link href="{%static 'assets/layouts/layout3/css/ev_custom.css'%}" rel="stylesheet" type="text/css"/>-->
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<style type="text/css">
+    .page-header .page-header-menu {
+    background: #ed1847;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li>a>i {
+    color: white;
+    }
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li.open>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li:hover>a, .page-header .page-header-menu .hor-menu .navbar-nav>li>a:active, .page-header
+    .page-header-menu .hor-menu .navbar-nav>li>a:focus, .page-header .page-header-menu .hor-menu .navbar-nav>li>a:hover
+    {
+    color: #fff;
+    background: #B60129!important;
+    }
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li>a {
+    color: black;
+    background-color: white;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li:hover>a {
+    color: white;
+    background: #d60836;
+    }
+    .table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #e7ecf1;
+    margin: 0px 0!important;
+    }
+
+    .btn-success {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+    .btn-success:hover {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+    .btn-success:focus {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+    .btn-success.dropdown-toggle {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li.active>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li.active>a:hover, .page-header .page-header-menu .hor-menu .navbar-nav>li.current>a, .page-header
+    .page-header-menu .hor-menu .navbar-nav>li.current>a:hover {
+    color: #f1f1f1;
+    background: #B60129;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li.active>a, .page-header .page-header-menu
+    .hor-menu .navbar-nav>li .dropdown-menu li.active>a:hover, .page-header .page-header-menu .hor-menu .navbar-nav>li
+    .dropdown-menu li.current>a, .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu
+    li.current>a:hover {
+    color: white;
+    background: #b60129;
+    }
+    .page-header .page-header-top .page-logo .logo-default {
+    margin: 5px;
+    margin-top: 0px !important;
+    }
+
+    .portlet.box.yellow-crusta {
+    border: 1px solid #D6D6D6;
+    border-top: 0;
+    }
+
+    .portlet.box.yellow-crusta > .portlet-title, .portlet.yellow-crusta, .portlet > .portlet-body.yellow-crusta {
+    background-color: #D6D6D6;
+
+    }
+
+    .portlet.box.yellow-crusta > .portlet-title > .caption, .portlet.box.yellow-crusta > .portlet-title > .caption > i {
+    color: #434343;
+
+    }
+    .stuts{
+    font-size: 14px;
+    color: #434343;
+    margin-top: 5px;
+    }
+    .summary{
+    padding: 0px 0px 0px 10px;
+    }
+
+    .tls_height{
+    height: 236px;
+
+    }
+    .tls_revisit{
+    height: 30px;
+
+    }
+
+    .schedule_tls_height{
+    height: 250px;
+    }
+    .dispatch_tls_height{
+    height: 156px;
+    }
+
+    .tls_bottom {
+    position: absolute;
+    bottom: 40px;
+    }
+
+    .dispatch_height{
+    height: 235px;
+    }
+
+
+
+    #processing{
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    margin: 0px auto;
+    z-index: 1000;
+    background-color: #FFF;
+    background-image: none;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-repeat: repeat;
+    background-size: inherit;
+    opacity: 0.5;
+}
+
+#loading{
+    width: 36%;
+    height: 22px;
+    position: absolute;
+    top: 26%;
+    left: 32%;
+    margin: -28px 0px 0px -25px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+}
+
+</style>
+<body class="page-container-bg-solid page-header-menu-fixed page-boxed" style="overflow-x: hidden;">
+<body class="page-container-bg-solid page-header-menu-fixed page-boxed">
+<div class="page-header">
+    <!-- BEGIN HEADER TOP -->
+    <div class="page-header-top">
+        <div class="container">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="javascript:;">
+                    <img src="{%static 'assets/layouts/layout3/img/essel_logo.png'%}" alt="logo" class="logo-default"/>
+                </a>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler"></a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <span class="username username-hide-mobile" style="cursor:default;">Muzzafarpur</span>
+                        </a>
+
+                    </li>
+
+                    <li class="droddown dropdown-separator">
+                        <span class="separator"></span>
+                    </li>
+
+
+                    <!-- END NOTIFICATION DROPDOWN -->
+
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <img alt="" class="img-circle" src="{%static 'assets/layouts/layout3/img/avatar.png'%}"/>
+                            <span class="username username-hide-mobile">{{request.user.username}}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a data-toggle="modal" onclick="changedPassword();">
+                                    <i class="icon-lock"></i> Change Password </a>
+                            </li>
+                            <li>
+                                <a href="/authen/logout">
+                                    <i class="icon-key"></i> Log Out </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <!-- END HEADER TOP -->
+    <!-- BEGIN HEADER MENU -->
+    <div class="page-header-menu">
+        <div class="container">
+            <!-- BEGIN HEADER SEARCH BOX -->
+            <!-- END HEADER SEARCH BOX -->
+            <!-- BEGIN MEGA MENU -->
+
+
+            <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+            <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+            <div class="hor-menu" style="width: 100% !important;">
+           <ul class="nav navbar-nav" style="width: 100% !important;margin-bottom: 5px;">
+
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Dashboard' == 'true' %}
+               <li class="menu-dropdown classic-menu-dropdown active-me eu_custom_header_landing" id="home_menu">
+                        <a href="{% url 'authen:applicationlanding' %}" id="mDashboard"><i class="fa fa-tachometer"></i>
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+
+                     <li class="menu-dropdown classic-menu-dropdown active-me" id="dashboard_menu">
+                        <a href="{% url 'mrbd_dashboard' %}" id="mDashboard">
+                            <!-- <i class="fa fa-tachometer"></i> --> Dashboard
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Schedule' == 'true' %}
+
+                    <li class="menu-dropdown classic-menu-dropdown active-me" id="schedule_menu">
+                        <a href="{% url 'schedule:open_bill_schedule' %}">
+                            <!-- <i class="fa fa-calendar"></i> --> Schedule
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                     {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Import PN33' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me" id="import_menu">
+                        <a href="{% url 'consumer:open_pn33_index' %}">
+                            <!-- <i class="fa fa-users"></i> --> Import
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Dispatch' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me" id="dispatch_menu">
+                        <a href="{% url 'dispatch:view_jobcard' %}">
+                            <!-- <i class="fa fa-users"></i> --> Dispatch
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                    {% if request.session.privileges|check_list:'Validation1,Validation2' == 'true' %}
+                        {% if request.user.userprofile.type == 'VALIDATOR_1' or request.user.userprofile.type == 'VALIDATOR_2' or request.user.userprofile.type == 'WEB_USER' %}
+                            <li class="menu-dropdown classic-menu-dropdown active-me" id="validate_menu">
+                                <a href="{% url 'validate:validate_jobcard_list' %}">
+                                    <!-- <i class="fa fa-fax"></i> --> Validate
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Upload' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me" id="upload_menu">
+                        <a href="{% url 'upload:open_upload_index' %}">
+                            <!-- <i class="fa fa-gavel"></i> --> Upload
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'System User' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me text-center" id="system_user_menu"
+                        style="width: 20%;    padding-top: 10px !important;">
+                        <a href="{% url 'meterreader:open-systemuser-index' %}" class="eu_custom_header_sys_users">
+                            System Users
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                    {% if request.user.userprofile.type == 'WEB_USER' and request.session.privileges|check_list:'Administration' == 'true' %}
+                    <li class="menu-dropdown classic-menu-dropdown active-me text-center"
+                        style="width: 18%;padding-top: 10px !important;" id="administrator_menu">
+                        <a href="{% url 'adminapp:open_role_index' %}" class="eu_custom_header_sys_users">
+                            <!-- <i class="fa fa-cog"></i> --> Administrators
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    {%endif%}
+                </ul>
+            </div>
+            <!-- END MEGA MENU -->
+        </div>
+    </div>
+    <!-- END HEADER MENU -->
+</div>
+<div id="processing" style="display:none;">
+    <div id="loading">
+        <img src="{%static 'assets/layouts/layout3/img/25.gif'%}" style="height : 100px;">
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+<div class="modal" id="changedpassword" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                        style="color: #FFF;"></button>
+                <h4 class="modal-title">Change Password</h4>
+            </div>
+            <form id="changedpwdFrm" name="changedpwdFrm">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-8 ">
+                            <label class="control-label visible-ie8 visible-ie9"> request User</label>
+                            <input type="text" name="username" required id="username" placeholder="Old Password"
+                                  class="control-label visible-ie8 visible-ie9" value="{{request.user.username}}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-8 ">
+                            <label for="oldpw"> Old Password </label>
+                            <span class="required">*</span>
+                            <input type="password" name="oldpw" id="oldpw" placeholder="Old Password"
+                                autofocus   class="form-control" required/>
+                            <!--<label class="error" id="oldpassword" style="display:none;"></label>-->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-8">
+                            <label for="newpwd"> New Password </label>
+                            <span class="required">*</span>
+                            <input type="password" name="newpwd" id="newpwd" minlength=6 placeholder="New Password"
+                               autofocus class="form-control" title="Password length should at least 6 character" required/>
+                            <!--<label class="error" id="newpassword" style="display:none;"></label>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-8">
+                            <label for="retypepwd"> Retype Password </label>
+                            <span class="required">*</span>
+                            <input type="password" name="retypepwd" id="retypepwd" placeholder="Retype Password" minlength=6
+                                autofocus  class="form-control"  required/>
+                            <!--<label class="error" id="retypepassword" style="display:none;"></label>-->
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="hide" id="pass_btn">
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submitbtn" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{%static 'assets/global/plugins/respond.min.js'%}"></script>
+<script src="{%static 'assets/global/plugins/excanvas.min.js'%}"></script>
+
+<!-- BEGIN CORE PLUGINS -->
+<script src="{%static 'assets/global/plugins/jquery.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap/js/bootstrap.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/js.cookie.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/jquery.blockui.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/uniform/jquery.uniform.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js'%}"
+        type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{%static 'assets/pages/scripts/table-datatables-buttons.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/scripts/datatable.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/datatables/datatables.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-toastr/toastr.min.js' %}" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="{%static 'assets/global/scripts/app.min.js'%}" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="{%static 'assets/layouts/layout3/scripts/layout.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/layouts/layout3/scripts/demo.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/layouts/global/scripts/quick-sidebar.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/pages/scripts/ui-toastr.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'custom-js/jquery.validate.js'%}" type="text/javascript"></script>
+<script src="{%static 'custom-js/bootbox.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'custom-js/base.js'%}" type="text/javascript"></script>
+<!-- END THEME LAYOUT SCRIPTS -->
+
+<script type="text/javascript">
+var startDate = new Date();
+var fechaFin = new Date();
+var FromEndDate = new Date();
+var ToEndDate = new Date();
+
+$('.from').datepicker({
+    autoclose: true,
+    minViewMode: 1,
+    format: 'mm/yyyy'
+}).on('changeDate', function(selected) {
+    startDate = new Date(selected.date.valueOf());
+    startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+    $('.to').datepicker('setStartDate', startDate);
+});
+
+$('.datepickerDate').datepicker({
+    format: 'dd/mm/yyyy',
+    minDate: 1,
+    startDate: 'd',
+    autoclose: true
+});
+$('.newdatepickerDate').datepicker({
+    format: "dd/mm/yyyy",
+    autoclose: false,
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "-100:+0",
+});
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "positionClass": "toast-top-center",
+  "onclick": null,
+  "showDuration": "1000",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut",
+}
+
+</script>
+{% block js_block %}{% endblock %}
+
+<script type="text/javascript">
+$(function() {
+     var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
+     console.log(pgurl);
+     $(".menu-dropdown a").each(function(){
+          if($(this).attr("href") == pgurl || $(this).attr("href") == '' ){
+          $(this).parent().addClass("active");
+          if($(this).parent().parent().parent('li')){
+            $(this).parent().parent().parent('li').addClass("active");
+          }
+          }
+     })
+});
+
+
+</script>

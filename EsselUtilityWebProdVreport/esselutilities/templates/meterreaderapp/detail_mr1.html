@@ -1,0 +1,703 @@
+{% extends "base.html" %}
+{%load staticfiles%}
+{%load  consumerFilter%}
+{% block content %}
+<style type="text/css">
+/*        .col-md-4,.col-sm-7{
+        width:300px;
+        height:900px;
+        margin-left:-15px;
+        margin-right:0px;
+        padding-left:0px;
+        padding-top:-15px;
+
+        padding-right:15px;
+        }
+        .col-md-3,.col-sm-6{
+        width:234px;
+        height:auto;
+        margin-left:0px;
+        padding-left:0px;
+        right-padding:10px;
+
+        }
+        .col-md-11{
+        width:800px;
+         border: 0.1px solid grey;
+         }*/
+/*#content{
+       weight:350px;
+        height:935px;
+         border-style: 0.1px hidden grey;
+         margin-left:-5px;
+        margin-right:0px;
+        margin-top:-10px;
+        margin-bottom:-10px;
+        padding-left:0px;
+
+        padding-bottom:0px;
+        padding-right:15px;
+         }*/
+
+        #portlet-content {
+         background-color: #efefef;}
+.portlet {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0px;
+    border-radius: 2px;
+
+ .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+
+</style>
+
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <!-- BEGIN PAGE HEAD-->
+        <!-- <div class="page-head">
+            <div class="container">
+                <div class="page-title">
+                    <h1>System Users</h1>
+                </div>
+            </div>
+        </div> -->
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>System Users</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                        <label class="col-md-12" style="margin-bottom: 30px!important;font-size: 14px !important;">
+                            <a href="" style="color: #ed1847 !important;">Meter Reading</a> &nbsp;&gt;&nbsp; <a
+                                href="/meterreader/open-systemuser-index/" style="color: #ed1847 !important;">System
+                            Users</a> &nbsp;&gt;&nbsp; <span
+                                style="color: #505050 !important;">Meter Reader Details</span>
+                        </label>
+
+                    </div>
+                </div>
+                <div class="portlet light portlet-fit portlet-datatable ">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 col-sm-6 eu_custom_pl0" style="border-top: 1px solid #efefef;">
+                                    <div class="portlet yellow-crusta box" id="content"
+                                         style="border: none !important;">
+                                        <div class="portlet-title" style="background: #efefef !important;">
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-4 name text-center actions stuts">
+                                                    <img src="{%static 'assets/layouts/layout3/img/avatar3.jpg'%}"
+                                                         alt="logo" class="logo-default"/>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="actions stuts">
+
+                                                        <span style="font-size: 25px; word-wrap: break-word;">{{mrData.employee_id}}</span>
+                                                    </div>
+                                                    <div class="actions stuts">
+
+                                                        <span style="font-size: 18px;word-wrap: break-word;">{{mrData.name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 actions stuts text-center">
+                                                    <a class="fa fa-pencil"
+                                                       onclick="openEditMeterreaderFrm()"
+                                                       style="color: #ED1847 !important;">
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                            <div class="row static-info eu_custom_validation_row_nm eu_custom_pb10"
+                                                 style="border-bottom: 1px solid #b0b0b0;">
+                                                <div class="col-md-5 name" style="color: #505050;">Active:</div>
+                                                <div class="col-md-7 name">
+                                                    {% if mrData.status == 'ACTIVE' %}
+                                                    <input type="checkbox" data-size="small" id="{{mrData.mrid}}"
+                                                           class="make-switch user-status" data-on-text="Yes"
+                                                           data-off-text="No" checked>
+                                                    {% elif mrData.status == 'INACTIVE' %}
+                                                    <input type="checkbox" data-size="small" id="{{mrData.mrid}}"
+                                                           class="make-switch user-status" data-on-text="Yes"
+                                                           data-off-text="No" unchecked>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="portlet-body " id="portlet-content">
+                                            <div class="row static-info eu_custom_pt0">
+                                                <div class="col-md-8 name">Availability</div>
+                                                <label class="col-lg-7 eu_custom_pt5 eu_custom_font_bold">{{mrData.availability.available}}
+                                                </label>
+                                                <div class="col-lg-5" style="float: right;"><a data-toggle="modal"
+                                                                                               href="#change">Change</a>
+                                                </div>
+                                                {% if mrData.availability.available == 'NOT_AVAILABLE' %}
+                                                <div class="col-md-12 name"> From {{mrData.availability.start_date}}
+                                                    To {{mrData.availability.end_date}}
+                                                </div>
+                                                {%endif%}
+
+
+                                            </div>
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+
+                                                        <label class="col-lg-12 eu_custom_pt5" style="color: #ed1010;">
+                                                            <input type="hidden" name="mr_id" id="mr_id"
+                                                                   value="{{mrData.mrid}}"/>
+                                                            <a href="/meterreader/detail-track-mr/{{mrData.mrid}}"
+                                                               style="color: #ed1847;text-decoration: none !important;">
+                                                                Track Location </a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row static-info eu_custom_pt20">
+
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Contact Number</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{mrData.phone}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Email Id</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{mrData.email}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Address</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{mrData.address}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Company</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{deviceData.companyName}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Device Id</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{deviceData.deviceID}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">Make
+                                                        </label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{deviceData.Make}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row static-info eu_custom_pt20">
+                                                <div class="col-md-12 name eu_custom_p0">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-12">IMEI</label>
+                                                        <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"
+                                                               style="word-wrap: break-word;">{{deviceData.IMEI}}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class ="cool-md-12">
+                                <div class="col-md-2">
+                                    <select required class="form-control" id="monthYear" style="margin-top: 5px"
+                                            name="">
+                                        {% for month in monthYears %}
+                                        <option value="{{month.value}}" {% if currentmonth == month.value %} selected {% endif %}>
+                                            {{month.text}}
+                                        </option>
+                                        {%endfor%}
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-7 actions text-right">
+                                     <div class="btn-group btn-group-devided">
+                                         <a class="cpink" href="{% url 'meterreader:reading_export_materreader' mrData.mrid currentmonth %}">Export To Excel</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                                <br>
+                                <br>
+                                <br>
+                                <div class="page-content-inner">
+                                    <div class="portlet-body-main">
+
+                                        <div class="portlet-body eu_custom_pt0">
+                                            <table class="table table-striped eu_custom_table_no_border"
+                                                   id="userRoleTbl" style="width: 75%;">
+                                                <thead style="background: #ededed !important;">
+                                                <tr>
+                                                    <!--<th style="width:12%;">-->
+                                                        <!--<center> Month</center>-->
+                                                    <!--</th>-->
+                                                    <th style="width:15%;">
+                                                        <center>Bill Cycle</center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center>Route</center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center>Consumers</center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center>Readings</center>
+                                                    </th>
+
+                                                    <th style="width:15%;">
+                                                        <center>Status</center>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                {% for obj in finallist %}
+                                                <tr role="row" class="even">
+                                                    <!--<td width="20%" class="sorting_1">-->
+                                                        <!--<center>{{obj.month|get_month}}</center>-->
+                                                    <!--</td>-->
+                                                    <td width="20%">
+                                                        <center>{{obj.billcycle}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.route}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.totalconsumer}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.jobcard}}</center>
+                                                    </td>
+
+                                                    <td width="20%">
+                                                        <center>{{obj.routestatus}} </center>
+                                                    </td>
+
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- End: life time stats -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" role="dialog" id="editDetail" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header eu_custom_modal_header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true"></button>
+                                <h4 class="modal-title"><b>Edit Meter Reader</b></h4>
+                            </div>
+                                <form id="frmEditMr" name="frmEditMr" onkeypress="return event.keyCode != 13;">
+                                {% csrf_token %}
+                                <div class="modal-body">
+
+                                    <input type="hidden" id="mrid" name="mrid" value="{{mrData.mrid}}">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label><h4><b>Basic Detail</b></h4></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label id=>First Name
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <input value="{{mrData.firstname}}" type="text" name="firstName"
+                                                   id="confirmfirstName"
+                                                   pattern="[A-Za-z\s]+" class="form-control" required/>
+                                        </div>
+
+                                        <div class="form-group col-lg-6">
+                                            <label>Last Name
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <input value="{{mrData.lastname}}" type="text" name="lastName"
+                                                   id="confirmlastName"
+                                                   pattern="[A-Za-z\s]+"
+                                                   class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="form-group col-lg-6">
+                                            <label>Address</label>
+                                            <input value="{{mrData.address}}" type="text" name="address"
+                                                   id="confirmaddress" class="form-control"/>
+                                        </div>
+
+                                        <div class="form-group col-lg-6">
+                                            <label>City<span class="required"> * </span></label>
+                                            <select class="form-control" name="mrCity" id="mrCity">
+                                                {% for city_obj in citys %}
+                                                {%if city_obj.id == mrData.city.id %}
+                                                <option value="{{city_obj.id}}" selected>{{city_obj.city}}</option>
+                                                {% else %}
+                                                <option value="{{city_obj.id}}">{{city_obj.city}}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label id=>Employee ID
+                                                <span class="required"> * </span></label>
+                                            <input value="{{mrData.employee_id}}" type="text" name="employeeId"
+                                                   maxlength="8"
+                                                   id="empId" class="form-control" required/>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label>Contact Number
+                                                <span class="required"> * </span></label>
+                                            <input value="{{mrData.phone}}" type="text" name="contactNo"
+                                                   maxlength="10" pattern="[0-9]{10}" class="form-control"
+                                                   title="Enter your 10 mobile no." required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label> Email ID</label>
+                                            <input value="{{mrData.email}}" type="text" name="email"
+                                                   id="confirmemail" class="form-control" readonly>
+                                        </div>
+                                    </div>
+
+                                    <!--<label>Chnage Password</label>-->
+                                    <div class="row">
+                                        <div class="form-group col-lg-2">
+
+                                            <input type="hidden" id="check_pwdchange_status"
+                                                   name="check_pwdchange_status">
+
+                                            <label>Change </label>
+                                            <input type="checkbox" id="changePwd"
+                                                   onclick="enableDisable(this.checked, 'textBox')">
+                                        </div>
+
+
+                                        <div class="form-group col-lg-5">
+                                            <label>Password</label>
+                                            <input type="password" name="password" id="password" pattern=".{6,}"
+                                                   title="Password length should at least 6 character"
+                                                   class="form-control" required/>
+                                        </div>
+
+                                        <div class="form-group col-lg-5">
+                                            <label>Retype Password</label>
+                                            <input type="password" name="retypePassword"
+                                                   id="retypePassword" class="form-control" required/>
+                                            <div class="registrationFormAlert" pattern=".{6,}" id="divCheckPasswordMatch"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label><h4><b>Device Detail</b></h4>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label>Company Name<span class="required"> * </span></label>
+                                            <select name="companyName" id="confirmcompanyName" class="form-control">
+
+                                                {% if deviceData.companyName == 'Essel' %}
+                                                <option value="Essel" selected>Essel</option>
+                                                <option value="Vendor">Vendor</option>
+                                                {% elif deviceData.companyName == 'Vendor' %}
+                                                <option value="Vendor" selected>Vendor</option>
+                                                <option value="Essel">Essel</option>
+                                                {% else %}
+
+                                                <option value="Vendor">Vendor</option>
+                                                <option value="Essel">Essel</option>
+                                                {% endif %}
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label>IMEI
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <input value="{{deviceData.IMEI}}" name="mrIMEI" id="confirmmrIMEI"
+                                                   class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label>Make</label>
+                                            <input value="{{deviceData.Make}}" name="mrMake" id="confirmmrMake"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label>Device ID</label>
+                                            <input value="{{deviceData.deviceID}}" name="deviceId"
+                                                   id="confirmdeviceId"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label><h4><b>Preferred Routes</b></h4></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-3">
+                                            <label>Bill Cycle Code </label>
+                                            <select id="billCycleOne" name="billCycleOne" class="form-control">
+                                                {% for bill in billCycle %}
+                                                <option value="{{bill.id}}">{{bill.bill_cycle_code}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label>Select Route 1 </label>
+                                            <select name="routeDetailOne" id="routeDetailOne" class="form-control">
+                                                <option value="">Select Route</option>
+
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-3">
+                                            <label>Bill Cycle Code</label>
+                                            <select id="billCycleTwo" name="billCycleTwo" class="form-control">
+                                                {% for bill in billCycle %}
+                                                <option value="{{bill.id}}">{{bill.bill_cycle_code}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label>Select Route 2</label>
+                                            <select name="routeDetailTwo" id="routeDetailTwo" class="form-control">
+                                                <option value=>Select Route</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group col-lg-3">
+                                            <label>Bill Cycle Code</label>
+                                            <select id="billCycleThree" name="billCycleThree" class="form-control">
+                                                {% for bill in billCycle %}
+                                                <option value="{{bill.id}}">{{bill.bill_cycle_code}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-3">
+                                            <label>Select Route 3</label>
+                                            <select name="routeDetailThree" id="routeDetailThree"
+                                                    class="form-control">
+                                                <option value="">Select Route</option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-3">
+                                            <label>Bill Cycle Code</label>
+                                            <select id="billCycleFour" name="billCycleFour" class="form-control">
+                                                {% for bill in billCycle %}
+                                                <option value="{{bill.id}}">{{bill.bill_cycle_code}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-3">
+                                            <label>Select Route 4</label>
+                                            <select name="routeDetailFour" id="routeDetailFour"
+                                                    class="form-control">
+                                                <option value="">Select Route</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <input type="submit" class="hide" id="edit_meterreader_submit">
+                                </div>
+                           </form>
+                            <div class="modal-footer eu_custom_modal_footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <button type="submit" id="btn_save" class="btn btn-success">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" role="dialog" id="change" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog ">
+
+                        <div class="modal-content">
+                            <div class="modal-header eu_custom_modal_header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true"></button>
+                                <h4 class="modal-title"><b>Change Availability</b></h4>
+                            </div>
+
+                            <form id="frmchangedate">
+                                <div class="modal-body">
+                                    <input type="hidden" id="mr_id" name="mr_id"
+                                           value="{{mrData.mrid}}">
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <div class="col-md-12 value">Name</div>
+                                            <div class="col-md-12 value">{{mrData.name}}</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-lg-12" id="availability">
+                                            <div class="col-md-12">Availability</div>
+                                            <ul class="radio-list list-inline"
+                                                data-error-container="#form_2_membership_error">
+                                                {% if mrData.availability.available == 'AVAILABLE' %}
+                                                <li><label>
+                                                    <input type="radio" class="radio" name="chkavailable"
+                                                           value="Available" checked/> Available </label>
+                                                </li>
+                                                <li>
+                                                    <label>
+                                                        <input type="radio" id="ntavailable"
+                                                               class="radio" name="chkavailable" value="Notavailable"/>Not-Available
+                                                    </label>
+
+                                                </li>
+                                                {% elif mrData.availability.available == 'NOT_AVAILABLE' %}
+
+                                                <li><label>
+                                                    <input type="radio" class="radio" name="chkavailable"
+                                                           value="Available"/> Available </label>
+                                                </li>
+                                                <li>
+                                                    <label>
+                                                        <input type="radio" id="ntavailable"
+                                                               class="radio" name="chkavailable" value="Notavailable"
+                                                               checked/>Not-Available
+                                                    </label>
+
+                                                </li>
+                                                {% endif %}
+
+
+                                            </ul>
+
+                                        </div>
+                                        <label class="error col-md-12" style="color:red; display:none;"></label>
+                                    </div>
+
+
+                                    <div class="row" id="date">
+                                        <div class="form-group col-md-6 ">
+                                            <label for=""> Start Date</label>
+                                            <span class="required">*</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="fa fa-calendar"></i></span>
+                                                <input type="text" name="startDate" id="startDate"
+                                                       class="form-control datepickerDate"
+                                                       value="{{mrData.availability.start_date}}">
+                                                <label class="error" style="color:red; display:none;"></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 form-group">
+                                            <label for=""> End Date</label>
+                                            <span class="required">*</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="fa fa-calendar"></i></span>
+                                                <input type="text" name="endDate" id="endDate"
+                                                       class="form-control datepickerDate"
+                                                       value="{{mrData.availability.end_date}}">
+                                                <label class="error" style="color:red; display:none;"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="modal-footer eu_custom_modal_footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <button type="submit" id="save_date" class="btn btn-success">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js_block %}
+<script src="{%static 'custom-js/detailMr.js'%}" type="text/javascript"></script>
+{% endblock %}

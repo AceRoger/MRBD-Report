@@ -1,0 +1,288 @@
+{% load staticfiles %}
+{% load consumerFilter %}
+ <div class="portlet-body">
+
+                                    <input type="hidden" id="totalRecord" value="{{Total}}">
+                                    <input type="hidden" id="totalCompleted" value="{{Completed}}">
+                                    <input type="hidden" id="totalNotStarted" value="{{NotStarted}}">
+                                    <input type="hidden" id="totalStarted" value="{{Started}}">
+                                    <input type="hidden" id="totalFailed" value="{{Failed}}">
+
+
+                                    {% if Total <= 0 %}
+                                        <div class="tabbable-line">
+                                            <p> There are no schedules defined for this month.</p>
+                                         </div>
+
+                                    {% else %}
+
+                                    <div class="tabbable-line">
+                                        <div class="row">
+
+                                            {%for pn33Download in pn33Downloads%}
+
+                                            {% if pn33Download.download_status == 'Not Started' %}
+                                            <div class="col-md-3 testVal col-sm-6"
+                                                 id="{{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}">
+                                                <div class="portlet yellow-crusta"
+                                                     style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+                                                    <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_not_confirmed">
+                                                        <div class="caption eu_custom_porlet_title_caption" style="padding: 13px;">
+                                                            <label style="font-size: 20px; color: #FFF;">
+                                                                {{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                        </div>
+                                                        <div class="actions eu_custom_porlet_title_actions">
+                                                            <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"class="font-md summary">{{pn33Download.download_status}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+
+                                                            <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center>{{pn33Download.bill_schedule.bill_cycle.bill_cycle_name}}</center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Start Date
+                                                                </label>
+                                                                <label class="col-lg-12 ">
+                                                                    <b>{{pn33Download|startDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    End Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                   <b> {{pn33Download|endDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <!--border-bottom-right-radius: 10px !important;-->
+                                                        </div>
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+                                                        </div>
+                                                        <div class="row static-info eu_custom_card_bottom">
+                                                            <div class="col-md-12 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left" style="border-bottom-right-radius: 10px !important; border: none !important;">
+                                                                <label class="col-lg-12 cpink">
+                                                                    <a onclick="import_pn33({{pn33Download.id}})" class="cpink">import</a>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% elif pn33Download.download_status == 'Started' %}
+                                            <div class="col-md-3 testVal col-sm-6"
+                                                 id="{{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}">
+                                                <div class="portlet yellow-crusta" style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+                                                    <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_pending">
+                                                        <div class="caption eu_custom_porlet_title_caption" style="padding: 13px;">
+                                                            <label style="font-size: 20px; color: #FFF;">
+                                                                {{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                        </div>
+                                                        <div class="actions eu_custom_porlet_title_actions">
+                                                            <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                  class="font-md summary">{{pn33Download.download_status}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+                                                            <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center>{{pn33Download.bill_schedule.bill_cycle.bill_cycle_name}}</center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Start Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                   <b> {{pn33Download|startDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    End Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                    <b>{{pn33Download|endDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <!--border-bottom-right-radius: 10px !important;-->
+                                                        </div>
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+                                                        </div>
+                                                        <div class="row static-info eu_custom_card_bottom">
+                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                <label class="col-lg-12 cpink" style="padding: 0px;">
+                                                                    {{pn33Download|getPercentage}}% Complete
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                <label class="col-lg-12 cpink">
+                                                                     Time {{pn33Download|getTimeDuration}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% elif pn33Download.download_status == 'Completed' %}
+                                            <div class="col-md-3 testVal col-sm-6"
+                                                 id="{{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}">
+
+                                                <div class="portlet yellow-crusta"
+                                                     style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+
+                                                    <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_confirmed">
+                                                        <div class="caption eu_custom_porlet_title_caption" style="padding: 13px;">
+                                                            <label style="font-size: 20px; color: #FFF;">
+                                                                {{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                        </div>
+                                                        <div class="actions eu_custom_porlet_title_actions">
+                                                            <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                  class="font-md summary">{{pn33Download.download_status}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+
+
+                                                            <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center>{{pn33Download.bill_schedule.bill_cycle.bill_cycle_name}}</center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Start Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                    <b>{{pn33Download|startDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    End Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                    <b>{{pn33Download|endDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Routes
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                    <b>{{pn33Download|getTotalRoute}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Consumers
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+
+                                                                    <b><a href="{% url 'consumer:open_consumer_index' pn33Download.bill_schedule.id %}">{{pn33Download|getTotalConsumer}}</a></b>
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                            <div class="col-md-12 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left" style="border-bottom-right-radius: 10px !important; border: none !important;">
+                                                                <label class="col-lg-12 cpink">
+                                                                    Completed On {{pn33Download.end_date|date:"d M Y"}}{{ pn33Download.end_date|time:"H:i" }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% elif pn33Download.download_status == 'Failed' %}
+                                            <div class="col-md-3 testVal col-sm-6"
+                                                 id="{{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}">
+                                                <div class="portlet yellow-crusta"
+                                                     style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+                                                    <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_rejected">
+                                                        <div class="caption eu_custom_porlet_title_caption" style="padding: 13px;">
+                                                            <label style="font-size: 20px; color: #FFF;">
+                                                                {{pn33Download.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                        </div>
+                                                        <div class="actions eu_custom_porlet_title_actions">
+                                                            <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                  class="font-md summary">{{pn33Download.download_status}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+                                                            <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center>{{pn33Download.bill_schedule.bill_cycle.bill_cycle_name}}</center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    Start Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                   <b>{{pn33Download|startDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-6 name">
+                                                                <label class="col-lg-12">
+                                                                    End Date
+                                                                </label>
+                                                                <label class="col-lg-12 value">
+                                                                    <b>{{pn33Download|endDate}}</b>
+                                                                </label>
+                                                            </div>
+                                                            <!--border-bottom-right-radius: 10px !important;-->
+                                                        </div>
+                                                        <div class="row eu_custom_import_static_info setmargin6">
+
+                                                        </div>
+                                                        <div class="row static-info eu_custom_card_bottom">
+                                                            <div class="col-md-12 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left" style="border-bottom-right-radius: 10px !important; border: none !important;">
+                                                                <label class="col-lg-12 cpink">
+                                                                    <a class="cpink" onclick="import_pn33({{pn33Download.id}})">Try Again</a>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {%endif%}
+
+                                            {%endfor%}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                     </div>

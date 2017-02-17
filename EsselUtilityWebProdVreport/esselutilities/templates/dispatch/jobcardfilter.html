@@ -1,0 +1,152 @@
+<div class="row">
+                                        {% if finallist %}
+                                            {%for obj in finallist %}
+                                                 <div class="col-md-3 col-sm-6 testVal" id="{{obj.billcycle.bill_cycle.bill_cycle_code}}">
+
+
+                                                        <div class="portlet yellow-crusta" style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                                {% if obj.is_schedule_completed %}
+                                                                 <div  class="portlet-title portlet-border eu_custom_badge_confirmed" >
+
+                                                                 {%else%}
+
+
+                                                                <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                                {% if obj.isdispatched %}
+                                                                <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+
+                                                                <div  class="portlet-title portlet-border eu_custom_badge_failed" >
+
+
+                                                                 {% elif obj.readindingcompletedstatus %}
+                                                                 <div  class="portlet-title portlet-border eu_custom_badge_confirmed" >
+
+                                                                {% elif obj.notstared %}
+
+                                                                 <div  class="portlet-title portlet-border eu_custom_portlet_title_not_confirmed" >
+
+
+                                                                 {%else%}
+                                                                 <div  class="portlet-title portlet-border eu_custom_badge_unbilled" >
+                                                    {%endif%}
+                                                    {%endif%}
+
+                                                                    <div class="caption" style="padding: 13px;">
+
+                                                                        <label style="font-size: 20px; color: #FFF;">{{obj.billcycle.bill_cycle_code}}</label>
+                                                                    </div>
+                                                                    <div class="actions stuts">
+                                                                    {% if obj.is_schedule_completed  %}
+                                                                        <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">Complete</span>
+
+                                                                        {%else%}
+
+                                                                    {% if obj.isdispatched %}
+
+                                                                        <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">Incomplete</span>
+
+
+                                                                        {% elif obj.readindingcompletedstatus  %}
+                                                                        <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">Complete</span>
+
+                                                                        {% elif obj.notstared  %}
+                                                                        <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">Not Dispatched</span>
+
+                                                                        {% else %}
+
+                                                                        <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">Pending</span>
+
+                                                                        {% endif %}
+                                                                        {% endif %}
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="portlet-body schedule_tls_height">
+                                                                    <div class="row static-info setmargin6">
+                                                                        <div class="col-md-12 name">
+                                                                            <label style="font-size: 18px;"><center>
+                                                                             {{obj.bill_cycle_name}} </center>
+                                                                            <!-- <center>
+                                                                            {{obj.bill_cycle_name}} </center> -->
+                                                                             <hr class="hrline" style="width: 268px;" />
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-md-6 name">
+                                                                            <label class="col-lg-12">
+                                                                                Start Date
+                                                                            </label>
+                                                                            <label class="col-lg-12 value">
+                                                                                {{obj.startdate}}
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-md-6 name">
+                                                                            <label class="col-lg-12">
+                                                                                End Date
+                                                                            </label>
+                                                                            <label class="col-lg-12 value">
+                                                                                {{obj.enddate}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row static-info setmargin6">
+                                                                        <div class="col-md-6 name">
+                                                                            <label class="col-lg-12">
+                                                                                Routes
+                                                                            </label>
+                                                                            <label class="col-lg-12 value">
+                                                                                {{obj.totalroutes}}
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-md-6 name">
+                                                                            <label class="col-lg-12">
+                                                                                Consumer
+                                                                            </label>
+                                                                            <label class="col-lg-12 value">
+                                                                               {{obj.totalconsumer}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row static-info eu_custom_card_bottom">
+                                                                        {% if obj.isdispatched %}
+                                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                                <a href='/dispatch/dispatch-fil/{{obj.billcycle.id}}/{{obj.currentmonth}}/'>Dispatch</a>
+                                                                            </div>
+                                                                        {% else %}
+                                                                            {% if obj.readindingcompletedstatus %}
+
+                                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                                <a href='/dispatch/dispatch-fil/{{obj.billcycle.id}}/{{obj.currentmonth}}/'>Details</a>
+                                                                            </div>
+
+
+                                                                             {% else %}
+                                                                             <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                                <a href='/dispatch/dispatch-fil/{{obj.billcycle.id}}/{{obj.currentmonth}}/'>Dispatch</a>
+                                                                            </div>
+                                                                            {%endif%}
+                                                                         {%endif%}
+                                                                         {% if obj.revisitcase %}
+                                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                                <a href='/dispatch/get-revisit-jobcard/{{obj.billcycle.id}}/{{obj.currentmonth}}/' > Revisit</a>
+                                                                            </div>
+                                                                        {%endif%}
+
+
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                </div>
+                                                {% endfor %}
+                                        {% else %}
+                                            No Bill Cylces found
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>

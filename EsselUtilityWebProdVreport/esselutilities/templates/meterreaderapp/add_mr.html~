@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Essel|User </title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{%load staticfiles%}
+{% block content %}
+
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <!-- BEGIN PAGE HEAD-->
+        <div class="page-head">
+            <div class="container">
+                <!-- BEGIN PAGE TITLE -->
+                <div class="page-title">
+                    <h1>System Users</h1>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <div class="page-content ">
+            <div class="container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="page-content-wrapper">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <ul class="page-breadcrumb breadcrumb">
+                                <li>
+                                    <i class="fa fa-circle"></i>
+                                    <a href=""><font color="black">Bill Payment</font></a>
+                                    <!--<font color="red">This is some text!</font> -->
+                                </li>
+
+
+                                <li>
+                                    <i class="fa fa-circle"></i>
+                                    <a href=""><font color="black">System User</font></a>
+                                    <!--<font color="red">This is some text!</font> -->
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- END PAGE BREADCRUMBS -->
+                <!-- BEGIN PAGE CONTENT INNER -->
+                <div class="page-content-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Begin: life time stats -->
+                            <div class="portlet light portlet-fit portlet-datatable ">
+                                <div class="portlet-title">
+                                    <div class="filter">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active">
+                                                        <a href="#meterReader" data-toggle="tab">Meter Readers</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#validator" data-toggle="tab">Validators </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="" data-toggle="tab">Admin</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 name"><input type="text" placeholder="Search"
+                                                                              class="form-control"/></div>
+                                            <div class="col-md-1" style="margin-top: 7px">
+                                                <label>Filter By:</label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <select required class="form-control" name="billCycleCode">
+                                                    <option value="">Select Bill Cycle Code</option>
+
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <select required class="form-control" name="routeId">
+                                                    <option value="">Select Route Id</option>
+
+                                                </select>
+                                            </div>
+
+
+                                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                    <a data-toggle="modal"  data-target="#addmr" type="submit">Add MR</a>
+                                                </label>
+                                            </div>
+
+                                            <!--<label class="btn btn-filled grey-salsa btn-outline btn-sqaure btn-sm ">-->
+                                            <!--<a data-toggle="modal" href="#addmr"   class="btn btn-danger">Add MR</a>-->
+                                            <!--</label>-->
+
+                                        </div>
+
+                                    </div>
+                                    <a href="/meterreader/detail-mr/">
+                                    <div class="portlet-body">
+                                        <div class="tabbable-line">
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="portlet yellow-crusta box">
+                                                        <div class="portlet-title">
+                                                            <div class="row static-info" style="padding-left:8px;">
+                                                                <div class="actions stuts">
+                                                                    <span>BL101</span>
+                                                                </div>
+                                                                <div class="actions stuts">
+                                                                    <span>Jhon Smith</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body tls_height">
+                                                            <div class="row static-info">
+                                                                <div class="col-md-7 name">Contact Number:</div>
+                                                                <div class="col-md-7 value"> 8956235689</div>
+                                                            </div>
+                                                            <div class="row static-info">
+                                                                <div class="col-md-7 name">Email Id:</div>
+                                                                <div class="col-md-7 value">john.smith@gmail.com</div>
+                                                            </div>
+                                                            <div class="row static-info">
+                                                                <div class="col-md-7 name">Active:</div>
+
+                                                            </div>
+                                                            <div class="row tls_bottom">
+                                                                <div class="col-md-12"> 3 Routes Assigned</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                </div>
+
+
+
+
+
+                                
+                            </div>
+                        </div>
+                            <!-- End: life time stats -->
+                    </div>
+                </div>
+            </div>
+                <!-- END PAGE CONTENT INNER -->
+        </div>
+    </div>
+</div>
+
+<div  class="modal fade" role="dialog" id="addmr" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog ">
+
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true"></button>
+                                                <h4 class="modal-title"><b>Add Meter Reader</b></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="frmAddMr">
+                                                     <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label><h4><b>Basic Detail</b></h4></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label id=>Meter Reader Name</label>
+                                                            <input type="text" name="firstName" id="firstName"
+                                                                   placeholder="Enter First Name"
+                                                                   class="form-control">
+                                                        </div>
+
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label>City</label>
+                                                            <select required class="form-control" name="mrCity">
+                                                                {% for city in citys %}
+                                                                <option value="{{city.city_id}}">{{city.city_name}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label id=>Employee ID</label>
+                                                            <input type="text" name="lname" id="cpass"
+                                                                   placeholder="Confirm Password"
+                                                                   class="form-control"></input>
+                                                        </div>
+
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Role</label>
+                                                            <select required class="form-control">
+                                                                {% for employeeType in employeeTypes %}
+                                                                <option value="{{employeeType.employee_type_id}}">
+                                                                    {{employeeType.employee_type}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label id=>Contact Number</label>
+                                                            <input type="text" name="mobileNo" id="mobileNo"
+                                                                   placeholder="Enter Mobile No"
+                                                                   class="form-control"></input>
+                                                        </div>
+                                                        <div class="form-group col-lg-4">
+                                                            <label id=>Email ID</label>
+                                                            <input type="text" name="emailID" id="emailID"
+                                                                   placeholder="Enter Email id"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                       <div class="form-group col-lg-4">
+                                                            <label>New Password</label>
+                                                            <input type="text" name="fname" id="pass"
+                                                                   placeholder="Enter Password"
+                                                                   class="form-control"></input>
+                                                        </div>
+                                                         <div class="form-group col-lg-4">
+                                                            <label id="">Retype Password</label>
+                                                            <input type="text" name="lname" id="cpass"
+                                                                   placeholder="Confirm Password"
+                                                                   class="form-control"></input>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label><h4><b>Device Detail</b></h4></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Company Name</label>
+                                                            <input type="text" name="companyName" id="companyName"
+                                                                   placeholder=""
+                                                                   class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Device ID</label>
+                                                            <input type="text" name="deviceName" id="deviceName"
+                                                                   placeholder=""
+                                                                   class="form-control">
+                                                        </div>
+                                                     </div>
+
+                                                      <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Make</label>
+                                                            <input type="text" name="mrMake" id="mrMake" placeholder=""
+                                                                   class="form-control">
+                                                        </div>
+
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label>IMEI</label>
+                                                            <input type="text" name="mrImei" id="mrImei"
+                                                                   placeholder="" class="form-control"></input>
+                                                        </div>
+                                                      </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label><h4><b>Preferred Routes</b></h4></label>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Select Route 1 </label>
+                                                            <select required class="form-control">
+                                                                {% for route in routeDetails %}
+                                                                <option value="{{route.route_id}}">{{route.route_code}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label id="">Select Route 2</label>
+                                                            <select required class="form-control">
+                                                                {% for route in routeDetails %}
+                                                                <option value="{{route.route_id}}">{{route.route_code}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <label>Select Route 3</label>
+                                                            <select required class="form-control">
+                                                                {% for route in routeDetails %}
+                                                                <option value="{{route.route_id}}">{{route.route_code}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-lg-4">
+                                                            <label id>Select Route 4</label>
+                                                            <select required class="form-control">
+                                                                {% for route in routeDetails %}
+                                                                <option value="{{route.route_id}}">{{route.route_code}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-8">
+                                                          <div class="modal-footer">
+                                                            <button type="button" id="btn_save" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                                                            <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/role.js'%}" type="text/javascript"></script>
+{% endblock %}
+
+</body>
+</html>

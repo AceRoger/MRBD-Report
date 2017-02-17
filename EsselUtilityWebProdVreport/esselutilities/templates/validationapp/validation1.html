@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Essel|User </title>
+
+    <style type="text/css">
+
+.tls_height{
+    height: 323px;
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+
+    }
+    .caption,
+.actions{
+    height: 5px !important;
+    line-height: 50px !important;
+    padding: 0 10px !important;
+}
+
+.eu_custom_card_bottom1{
+    height: 25px;
+    line-height: 50px;
+    margin-bottom: 0px !important;
+    border-top: 1px solid #b0b0b0 !important;
+    width: 100% ! important;
+    margin-left: 0px !important;
+}
+
+.row{
+    margin-left: 0px;
+margin-right: 0px;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+{% extends "base.html" %}
+{%load staticfiles%}
+{% block content %}
+
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <!-- BEGIN PAGE HEAD-->
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>Validate</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <!-- <div class="page-content "> -->
+        <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                        <label class="col-md-12"
+                               style="margin-bottom: 30px!important;color: #ed1847 !important;font-size: 14px !important;">
+                            Meter Reading &gt;<span style="color: #505050 !important;">Validate</span>
+                        </label>
+                        <!-- END PAGE BREADCRUMBS -->
+                        <!-- BEGIN PAGE CONTENT INNER -->
+                        <div class="page-content-inner">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Begin: life time stats -->
+                                    <div class="portlet light portlet-fit portlet-datatable ">
+                                        <div class="portlet-title">
+                                            <div class="col-md-2">
+                                                <select required class="form-control" id="monthYear" style="margin-top: 5px" name="">
+                                                    {% for month in monthYears %}
+                                                    <option value="{{month.value}}" {% if currentmonth == month.value %} selected {% endif %}>
+                                                        {{month.text}}
+                                                    </option>
+                                                    {%endfor%}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 name"></div>
+                                            {% if loggedinuser.type == "VALIDATOR_1" or loggedinuser.type == "VALIDATOR_2" %}
+                                            <form id="consumerSearchform" name="consumerSearchform" action="{% url 'validate:validate_consumer_search' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="searchmonth" name="searchmonth" value="{{currentmonth}}">
+                                                {% if loggedinuser.type == "VALIDATOR_1" %}
+                                                <input type="hidden" id="validator" name="validator" value="1">
+                                                {% else %}
+                                                <input type="hidden" id="validator" name="validator" value="2">
+                                                {% endif %}
+                                                <div class="col-md-3 name">
+                                                    <input type="text" placeholder="Consumer number" id="searchconsumer" class="form-control" name="searchconsumer"/>
+                                                </div>
+                                                <div class="col-md-2 name">
+                                                    <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                        <a href="#" onclick="searchConsumer('{% url 'validate:validate_consumer_search' %}')" style="color: #FFF;">Go</a>
+                                                    </label>
+                                                </div>
+                                            </form>
+                                            {% endif %}
+
+
+                                        </div>
+                                        <!-- todo js code -->
+                                        <div class="portlet-title">
+                                            <div class="col-md-2 name">
+                                                <input type="text" placeholder="Search" id="searchTxt"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <label class="uppercase font-hg font-black-flamingo">
+                                                    {{overAllConsumers}} </label>
+                                                <label>Total Consumers</label>
+                                                <label class="font-hg1 font-black-flamingo">|</label>
+                                                <label class="uppercase font-hg font-black-flamingo"
+                                                       style="color: #ed1847;">{{overAllReadingsReceived}} </label>
+                                                <label class=" font-md font-black-flamingo" style="color: #ed1847;">Received</label>
+                                                <label class="font-hg1 font-black-flamingo">|</label>
+                                                <label class="uppercase font-hg font-black-flamingo"
+                                                       style="color: #ed1847;">{{overAllValidatedV1}} </label>
+                                                <label class=" font-md font-black-flamingo" style="color: #ed1847;">Validation1</label>
+                                                <label class="font-hg1 font-black-flamingo">|</label>
+                                                <label class="uppercase font-hg font-black-flamingo"
+                                                       style="color: #ed1847;">{{overAllValidatedV2}} </label>
+                                                <label class=" font-md font-black-flamingo" style="color: #ed1847;">Validation2</label>
+                                                <label class="font-hg1 font-black-flamingo">|</label>
+                                                <label class="font-hg1 summary font-green-jungle" style="color: #ed1847;">
+                                                    {{overAllValidated}}
+                                                </label>
+                                                <label class="font-md  font-green-jungle"> Validated </label>
+                                                <!-- <label class="font-hg1 summary font-red-flamingo" style="color: #ed1847;">
+                                                    {{overAllPending}} </label>
+                                                <label class="font-md font-red-flamingo">Pending</label> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="portlet-body" id="validationBody">
+                                            <div class="portlet-body">
+                                                <div class="tabbable-line">
+                                                    {% for finallist in finallists %}
+                                                    <div class="row">
+                                                        <div class="col-md-4 row-sm-6 testVal"
+                                                             id="{{finallist.billcycle.bill_cycle.bill_cycle_code}}">
+                                                            <div class="portlet yellow-crusta"
+                                                                 style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+                                                                <div class="portlet-title portlet-border2 eu_custom_portlet_title_confirmed"
+                                                                     style="margin-bottom: 10px !important;">
+                                                                    <div class="portlet-title">
+                                                                        <div class="caption eu_custom_porlet_title_caption col-md-2">
+                                                                            <label style="font-size: 20px; color: #FFF;">
+                                                                                {{finallist.billcycle.bill_cycle.bill_cycle_code}}</label>
+                                                                        </div>
+                                                                        <div class="actions eu_custom_porlet_title_actions col-md-10">
+                                                                            <!-- {% if finallist.validationStarted %}
+                                                                                {% if finallist.validationPercentage == 0 %}
+                                                                                    <span class="font-md summary"> Validation Completed</span>
+                                                                                {% else %}
+                                                                                    <span class="font-md summary"> Validation Started {{ finallist.validationPercentage }} % Remaining</span>
+                                                                                {% endif %}
+                                                                            {% endif %} -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="portlet-body tls_height" id="content">
+                                                                    <div class="row static-info" style="text-align:center;">
+                                                                        <div class="col-md-12 name">
+                                                                            <label style="font-size: 18px;">{{finallist.billcycle.bill_cycle.bill_cycle_name}}
+                                                                            </label>
+                                                                            <hr class="hrline" style="width: 100%;" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row static-info setmargin">
+                                                                        <div class="col-md-4 name"><label
+                                                                                class="font-hd font-black-flamingo"><font
+                                                                                color="black"><b> {{finallist.startdate}}</b>
+                                                                            <br> </font></label>
+                                                                            <label>Start Date</label>
+                                                                        </div>
+                                                                        <div class="col-md-2"></div>
+                                                                        <div class="col-md-6 name"><label
+                                                                                class="col-lg-12"><font
+                                                                                color="black"><b>{{finallist.billingdate}}</b></font></label>
+                                                                            <label style="margin-left: 15px;">Billing Date</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row static-info setmargin">
+                                                                        <div class="col-md-4 value">
+                                                                            <label class="font-hg font-black-flamingo"><font
+                                                                                    color="black">{{finallist.totalconsumer}}
+                                                                            </font></label>
+                                                                            <label> Total Consumer
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-md-4 value"><label
+                                                                                class="font-hg font-black-flamingo"><font
+                                                                                color="black">
+                                                                            {{finallist.readingreceived}} </font></label>
+                                                                            <label class="font-hd font-black-flamingo"> Readings Recieved
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-md-4 value"><label
+                                                                                class="font-hg font-black-flamingo"><font
+                                                                                color="black">{{finallist.meterReadingCompleted}} </font></label>
+                                                                            <br>
+                                                                            <label class="font-hd font-black-flamingo">Validated</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row static-info setmargin">
+                                                                        <div class="col-md-4 value" ></div>
+                                                                        <div class="col-md-4 value" >
+                                                                            <label class="font-hg font-black-flamingo"> <font color="black">{{finallist.unBilledConsumers}} <br></font></label>
+                                                                        </div>
+                                                                        <div class="col-md-4 value">
+                                                                            <label class="font-hg font-black-flamingo"> <font color="black">{{finallist.meterReadingDuplicate}} <br></font></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row static-info setmargin eu_custom_card_bottom1">
+                                                                        {% if finallist.validatorAssigned %}
+                                                                        {% if loggedinuser.type == "VALIDATOR_1" %}
+                                                                        <div class="col-md-4 value eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                            <label class="font-hd font-black-flamingo">
+                                                                                <a href="{% url 'validate:validation_level_one' finallist.billcycle.bill_cycle.id currentmonth %}"><font color="black"> Validate</font></a></label>
+                                                                        </div>
+                                                                        {% else %}
+                                                                        <div class="col-md-4 value eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                            <label class="font-hd font-black-flamingo">
+                                                                                <a href="{% url 'validate:validation_level_two' finallist.billcycle.bill_cycle.id currentmonth %}"><font color="black"> Validate</font></a></label>
+                                                                        </div>
+                                                                        {% endif %}
+                                                                        {% else %}
+                                                                        <div class="col-md-4 value eu_custom_card_bottom_button eu_custom_card_bottom_button_left" style="line-height:55px;">
+                                                                            <label class="font-hd font-black-flamingo">
+                                                                            </label>
+                                                                        </div>
+                                                                        {% endif %}
+                                                                        <div class="col-md-4 value eu_custom_card_bottom_button ">
+                                                                            <label class="font-hd font-black-flamingo">
+                                                                                <a href="{% url 'validate:unbillconsumer' finallist.billcycle.bill_cycle.id currentmonth %}"><font color="black"> New</font></a></label>
+                                                                        </div>
+                                                                        <div class="col-md-4 value eu_custom_card_bottom_button eu_custom_card_bottom_button_right" style="line-height:55px">
+                                                                            <label class="font-hd font-black-flamingo" style="line-height:20px;"><a href="{% url 'validate:dupicatelist' finallist.billcycle.bill_cycle.id currentmonth %}"><font color="black"> Duplicate</font></a></label>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {%endfor%}
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="page-prefooter">
+                                                    <div class="pagination" align="center">
+                                                        <div class="pages">
+                                                            <ul>
+                                                                {% if finallists1.has_previous %}
+                                                                <a onclick="call_prev({{ finallists1.previous_page_number }});">Previous</a>
+                                                                {% endif %}
+
+
+                                                                {% for pg in page_range %}
+                                                                {% if finallists1.number == pg %}
+                                                                <a onclick="currentPage({{pg}})" class="btn btn-default">{{pg}}</a>
+                                                                {% else %}
+                                                                <a onclick="currentPage({{pg}})" class="btn">{{pg}}</a>
+                                                                {% endif %}
+                                                                {% endfor %}
+
+
+                                                                {% if finallists1.has_next %}
+                                                                <a onclick="call_next({{ finallists1.next_page_number }});">next</a>
+                                                                {% endif %} </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End: life time stats -->
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT INNER -->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT BODY -->
+    <!-- END CONTENT BODY -->
+</div>
+<!-- END CONTENT -->
+<!-- END CONTAINER -->
+<!-- Start Create New Schedule Modal -->
+
+
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/validation.js'%}" type="text/javascript"></script>
+{% endblock %}
+</body>
+</html>

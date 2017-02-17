@@ -1,0 +1,334 @@
+
+<div class="portlet-body">
+                                        <input type="hidden" id="totalCopied" value="{{Copied}}">
+                                        <input type="hidden" id="totalNotConfirmed" value="{{NotConfirmed}}">
+                                        <input type="hidden" id="totalConfirmed" value="{{Confirmed}}">
+                                        <input type="hidden" id="totalPendding" value="{{PendingApproval}}">
+                                        <input type="hidden" id="totalRejected" value="{{Rejected}}">
+
+                                        {% if Copied <= 0 %}
+                                        <div class="tabbable-line">
+                                            <p> There are no schedules defined for current month. You can copy and
+                                                confirm schedule from the previous month or create new schedule. </p>
+                                        </div>
+                                        {% else %}
+                                        <div class="tabbable-line">
+                                            <div class="row eu_custom_tab_row">
+                                                {%for billSchedule in billSchedules%}
+
+                                                {% if billSchedule.status == 'Not Confirmed' %}
+
+
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border eu_custom_portlet_title_not_confirmed">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                       <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-12 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left"
+                                                                     style="border-bottom-right-radius: 10px !important; border-right: 0px">
+                                                                    <a data-toggle="modal" class="cpink"
+                                                                       onclick="changeSchedule({{billSchedule.id}})">Change & Confirm</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Confirmed' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_confirmed" style="margin-bottom: 10px !important;"> <!-- style="margin-bottom: 10px !important;"  Added style here for Adjustment -->
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height" >
+                                                            <div class="row static-info setmargin6" >
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                       <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6" >
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a data-toggle="modal"
+                                                                       onclick="changeInConformTab({{billSchedule.id}})"
+                                                                       class="cpink">Change</a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="showHistory({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Pending Approval' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border2 eu_custom_portlet_title_pending">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                       <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="sendReminder({{billSchedule.id}});">
+                                                                        Send Reminder </a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="pendingHistory({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Rejected' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border2 eu_custom_portlet_title_rejected">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="changeInRejectedTab({{billSchedule.id}})">Change</a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="rejectedHistoryBtn({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endif%}
+
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>

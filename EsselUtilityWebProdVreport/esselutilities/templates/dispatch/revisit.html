@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Essel|User </title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{%load staticfiles%}
+{% block content %}
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <!-- BEGIN PAGE HEAD-->
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>Dispatch</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <!-- <div class="page-content "> -->
+           <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                    <div class="col-md-3">
+                        <ul class="page-breadcrumb breadcrumb">
+                            <li>
+                                <!-- <a href="index.html">Home</a> -->
+                                <span style="color: #ed1847;">Meter Reading</span>
+                                <i class="fa fa-circle"></i>
+                            </li>
+                            <li>
+                                <span style="color: #337ab7;">Revisit</span>
+                               <!--  <a href="#">Dispatch</a>  --><!-- link to do -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- END PAGE BREADCRUMBS -->
+                <!-- BEGIN PAGE CONTENT INNER -->
+                <div class="page-content-inner">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <!-- Begin: life time stats -->
+                            <div class="portlet light portlet-fit portlet-datatable ">
+                            <div class="portlet-title">
+                                    <div class="col-md-4">
+                                    <label class="font-hg font-black-flamingo">
+                                    Billcycle</label>
+                                    <label class="font-hg font-black-flamingo">&nbsp;&nbsp;{{billcyclecode}}</label>
+                                    <label id="{{start_date}}" value="start_date" class="font-hg1 summary font-green-jungle"> &nbsp;&nbsp;Bill Month &nbsp;&nbsp;{{month}}</label>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="col-md-2 actions text-right">
+                                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            
+
+                                                <input type="hidden" id="current_month" name="current_month" value="{{bill_month}}">
+                                            
+                                                <!-- <button type="button" onclick="refresh();" -->
+                                                 <button type="button" onclick="refreshh();"
+                                                        class="copy_from_prev_button eu_custom_portlet_title_not_confirmed pull-right"
+                                                        style="color: #FFF;">
+                                                        
+                                                    Refresh
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs font-green"></i>
+                                        <span class="caption-subject font-green sbold uppercase">Revisit</span>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+                                        </div>
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+                                        </div>
+
+                                    </div>
+                                </div> -->
+                                <div class="portlet-title">
+                                    <div class="filter">
+                                        <div class="row">
+
+                                        <div class="col-md-1 name">
+                                                <label style="margin-top: 5px" align="right">Route</label>
+
+                                                </div>
+                                                <div class="col-md-2">
+                                                <!-- billcycle to do -->
+                                                 <input type="hidden" name="month"  id="month" value="{{bill_month}}"/>
+                                                  <input type="hidden" name="billcycle"  id="billcycle" value="{{billcycle}}"/>
+
+                                                <select required class="form-control" name="selectRoute" id="selectRoute" >
+                                                  <option value="All">All</option>
+
+                                                   {% for totalRoutesRevisitOne in totalRoutesRevisitCase %}
+                                                    <option value="{{totalRoutesRevisitOne.id}}">{{totalRoutesRevisitOne}}</option>
+
+                                                    {% endfor %}
+                                                </select>
+                                                </div>
+
+                                            <div class="col-md-5">
+                                            <label class="uppercase font-hg font-black-flamingo">{{totalroute}}</label>
+                                                <label> Total Route</label>
+                                                <label class="font-hg font-black-flamingo">|</label>
+
+                                                <label class="font-hg1 summary font-green-jungle">{{count}} Dispatched</label>
+
+                                                <label class="font-hg1 summary font-blue"> {{notdispatched}} Pending </label>
+                                                <label class="font-hg1 summary font-grey-mint"> {{completed}} Completed </label>
+
+
+                                            </div>
+                                            <!-- <div class="col-md-4 btn-group btn-group-devided" >
+                                            <a style="float:right" class="cpink" href="{% url 'dispatch:revisit_list_exporttoexcel' billcycle bill_month %}">Export To Excel</a>
+                                        </div> -->
+
+                                            <div class="eu_custom_porlet_title_actions dispatch_action">
+
+                                        <!--  <div class="btn-group btn-group-devided" >
+                                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                {% if prev_record %}
+                                                <a href='/dispatch/dispatch-fil/{{prev_record}}/{{currentmonth}}/' >Previous</a>
+                                                {% else %}
+                                                <a href='#' >Previous</a>
+                                                {% endif%}
+                                            </label>
+                                        </div>
+                                        <div class="btn-group btn-group-devided" >
+                                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                {% if next_record %}
+                                                    <a href='/dispatch/dispatch-fil/{{next_record}}/{{currentmonth}}/' >Next</a>
+                                                {% else %}
+                                                <a href='#' >Next</a>
+                                                {% endif%}
+
+                                            </label>
+                                            </div>
+ -->
+
+                                    </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div id="revisitBody"> -->
+                                <!-- <div class="portlet-title">
+                                    <div class="filter">
+                                        <div class="row">
+                                        <div class="col-md-4 name">
+                                               <input type="checkbox" onClick="toggleCheck(this)" value="consumer"><label> Select All &nbsp;&nbsp;</label>
+
+                                            <label> <a data-toggle="modal" href='/dispatch/revisit/{{obj.billcycle.bill_cycle.id}}/{{obj.lastmrid}}'> To Same MR &nbsp;&nbsp;</a></label>
+                                           <label><a data-toggle="modal" href='/dispatch/revisit/{{obj.billcycle.bill_cycle.id}}/{{obj.route}}'> To New MR &nbsp;&nbsp;</a></label>
+                                            </div>
+                                            <div class="col-md-2"> -->
+                                            <!-- <label class="uppercase font-hg font-black-flamingo"></label>
+                                                <label>Consumer</label>
+                                                <label class="font-hg font-black-flamingo">|</label> -->
+
+                               <!--              </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                 <div class="page-content-inner" >
+                                </div>
+                               <div class="portlet-body eu_custom_validation_level_1_portlet_body eu_custom_mt25" id="revisitBody" >
+                                <div class="page-content-inner">
+                                    <div class="portlet-body-main">
+                                        <div class="portlet-body eu_custom_pt0" >
+                                            <table class="table table-striped eu_custom_table_no_border" id="table-consumer-list" style="width: 100%;">
+                                                <thead style="background: #ededed !important;" >
+                                                    <tr>
+                                                            <!-- <th class="text-center eu_custom_p0">Select</th> -->
+                                                            <th class="text-center eu_custom_p0">Route</th>
+                                                            <th class="text-center eu_custom_p0 " width="12%">Consumer Number</th>
+                                                            <th class="text-center eu_custom_p0" width="12%">Consumer Name</th>
+                                                            <th class="text-center eu_custom_p0" width="12%">Meter Number</th>
+
+
+                                                            <th class="text-center eu_custom_p0">Meter Reader Name</th>
+                                                            <th class="text-center eu_custom_p0">status</th>
+                                                            <th class="text-center eu_custom_p0">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                {% for consumerDetailOne in consumerDetails %}
+
+                                                    <tr>
+                                                    <form id="mrdetailsformrevisit{{consumerDetailOne.route.id}}" name="mrdetailsformrevisit{{consumerDetailOne.route.id}}" action="{% url 'dispatch:get_mrlist_revisit_list' %}" method="post">
+                                                        {% csrf_token %}
+                                                    <input type="hidden" id="route" name="route" value="{{consumerDetailOne.route.id}}">
+                                                    <input type="hidden" id="bill_month" name="bill_month" value="{{bill_month}}">
+                                                    <input type="hidden" id="jobcard_id" name="jobcard_id" value="{{consumerDetailOne.jobcard_id}}">
+
+                                                        <!-- <td class="text-center">
+                                                            <input type="checkbox" name="consumer" value="consumer">
+                                                        </td> -->
+                                                         <td class="text-center" >{{consumerDetailOne.route}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.consumer_no}}</td>
+                                                        <td class="text-center" width="20%">{{consumerDetailOne.name}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.meter_no}}</td>
+
+
+                                                        <td class="text-center">{{consumerDetailOne.last_mr}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.status}}</td>
+                                                        <td class="text-center">
+                                                        {%if consumerDetailOne.is_schedule_completed%}
+
+                                                        Schedule Completed
+                                                        {%else%}
+                                                        {%if consumerDetailOne.is_readingcompleted %}
+
+                                                        Reading Complete
+
+                                                        {%else%}
+
+                                                        {%if consumerDetailOne.currentmr %}
+
+                                                            <a onclick='do_deassign_revisit({{consumerDetailOne.route.id}})' href="#">Deassign</a>
+
+                                                            <a onclick='get_mrdeatils_revisit_list({{consumerDetailOne.route.id}})' href="#">Reassign</a>
+
+                                                        {% else %}
+
+                                                        <a onclick='get_mrdeatils_revisit_list({{consumerDetailOne.route.id}})' href="#">To New MR</a>
+
+                                                        {%endif%}
+                                                         {%endif%}
+
+                                                        {% endif %}</td>
+                                                        </form>
+                                                    </tr>
+
+                                                {% endfor %}
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+
+                    </div>
+
+
+                </div>
+                <!-- END PAGE CONTENT INNER -->
+
+            </div>
+
+
+                            </div>
+                            <!-- End: life time stats -->
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT INNER -->
+
+            <!-- </div>
+        </div> -->
+
+        <!-- END PAGE CONTENT BODY -->
+        <!-- END CONTENT BODY -->
+   <!--  </div> -->
+    <!-- END CONTENT -->
+<!-- </div>
+ -->
+<div class="modal fade bs-modal-lg" id="history" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h3 class="modal-title">Dispatch Revisit Case</h3>
+
+            </div>
+            <div class="modal-body" id="modalbody" style="padding: 0px !important;">
+
+            </div>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="assignmrrevisitlist();">Dispatch</button>
+                <!-- <button type="button" class="btn btn-success" onclick="assignmr();">Dispatch $ Next</button> -->
+                <!-- <button type="button" class="btn btn-success">Dispatch And Next</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER -->
+
+
+
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/dispatch.js'%}" type="text/javascript"></script>
+{% endblock %}
+
+</body>
+</html>

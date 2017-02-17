@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Essel|User </title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{%load staticfiles%}
+{% block content %}
+
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <!-- BEGIN PAGE HEAD-->
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>Dispatch</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <!-- <div class="page-content "> -->
+           <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                    <div class="col-md-3">
+                        <ul class="page-breadcrumb breadcrumb">
+                            <li>
+                                <!-- <a href="index.html">Home</a> -->
+                                <span style="color: #ed1847;">Meter Reading</span>
+                                <i class="fa fa-circle"></i>
+                            </li>
+                            <li>
+                                <span style="color: #337ab7;">Revisit</span>
+                               <!--  <a href="#">Dispatch</a>  --><!-- link to do -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- END PAGE BREADCRUMBS -->
+                <!-- BEGIN PAGE CONTENT INNER -->
+                <div class="page-content-inner">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <!-- Begin: life time stats -->
+                            <div class="portlet light portlet-fit portlet-datatable ">
+
+                            <div class="portlet-title">
+                                    <!-- <div class="caption">
+                                        <i class="fa fa-cogs font-green"></i>
+                                        <span class="caption-subject font-green sbold uppercase">Dispatch</span>
+                                    </div> -->
+                                    <div class="col-md-4">
+                                    <label class="font-hg font-black-flamingo">
+                                    Billcycle</label>
+                                    <label class="font-hg font-black-flamingo"> &nbsp;&nbsp;{{billcycle.bill_cycle_code}}</label>
+                                    <label id="{{start_date}}" value="start_date" class="font-hg1 summary font-green-jungle">Bill Month &nbsp;&nbsp; {{month}}</label>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="col-md-2 actions text-right">
+                                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                <button type="button" onclick="refresh();"
+                                                        class="copy_from_prev_button eu_custom_portlet_title_not_confirmed pull-right"
+                                                        style="color: #FFF;">
+                                                    Refresh
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="portlet-title">
+                                    <div class="filter">
+                                        <div class="row">
+                                         <div class="col-md-2 name">
+                                            <input type="text" placeholder="Search" id="searchTxtroute"
+                                                                              class="form-control"/>
+
+                                                </div>
+                                       
+                                        
+                                            <div class="col-md-5">
+                                            <label class="uppercase font-hg font-black-flamingo">{{routecount}}</label>
+                                                <label> Total Route</label>
+                                                <label class="font-hg font-black-flamingo">|</label>
+
+                                                <label class="font-hg1 summary font-green-jungle">{{totalrevisit}} Revisit</label>
+<!--  -->
+                                                
+                                                <!--  <label class="font-hg1 summary font-red-flamingo">Started</label> -->
+                                               <!--  <label class="font-md summary 
+                                               <!--  <label class="font-md summary font-red-flamingo">20 Incompleted</label> -->
+                                                <!-- <label class="font-hg font-black-flamingo"></label>
+                                                <label class="font-md summary font-red-flamingo"></label> -->
+                                            </div>
+                                            <div class="col-md-3">
+                                            <label class="font-hg1 summary font-grey-mint"><a href='/dispatch/revisit/{{billcycle.id}}/{{bill_month}}/' > Revisit List</a> </label>
+                                            </div>
+
+                                            <!-- <div class="eu_custom_porlet_title_actions dispatch_action">
+
+                                         <div class="btn-group btn-group-devided" >
+                                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                {% if prev_record %}
+                                                <a href='/dispatch/dispatch-fil/{{prev_record}}/{{currentmonth}}/' >Previous</a>
+                                                {% else %}
+                                                <a href='#' >Previous</a>
+                                                {% endif%}
+                                            </label>
+                                        </div>
+                                        <div class="btn-group btn-group-devided" >
+                                            <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                {% if next_record %}
+                                                    <a href='/dispatch/dispatch-fil/{{next_record}}/{{currentmonth}}/' >Next</a>
+                                                {% else %}
+                                                <a href='#' >Next</a>
+                                                {% endif%}
+
+                                            </label>
+                                            </div>
+
+
+                                    </div> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                 <div class="page-content-inner">
+                                </div>
+
+                                <div class="portlet-body">
+                                    <div class="tabbable-line">
+                                        <div class="row">
+                                            {% for obj in consumerDetails %}
+                                            <form id="mrdetailsform{{obj.route.id}}" name="mrdetailsform{{obj.route.id}}" action="{% url 'dispatch:get_mrlist_revisit' %}" method="post">
+                                                {% csrf_token %}
+                                            <input type="hidden" id="route_id" name="route_id" value="{{obj.route.id}}">
+                                            <input type="hidden" id="current_month" name="current_month" value="{{bill_month}}">
+
+                                             <div class="col-md-3 col-sm-6 testVal" id="{{obj.route}}">
+                                               
+
+                                    <div class="portlet yellow-crusta " style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                    <div  class="portlet-title portlet-border eu_custom_badge_unbilled" >
+                                                        <div class="caption" style="padding: 13px;">
+
+                                                            <label style="font-size: 20px; color: #FFF;"> {{obj.route}}</label>
+                                                        </div>
+                                                            <div class="actions stuts">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;" class="font-md summary">{{obj.status}}</span>
+                                                            </div>
+                                                    </div>
+
+                                                <div class="portlet-body dispatch_tls_height">
+                                                    <div class="row static-info setmargin6">
+
+                                                        <div class="col-md-12 name">
+
+                                                            <div class="col-md-6 name" style="padding-left: 0px;">
+                                                                <label class="col-lg-12">
+                                                                        Consumer
+                                                                    </label>
+
+                                                                    <label class="col-lg-12 value">
+                                                                        {{obj.jobcardcount}} 
+                                                                    </label>
+
+                                                            </div>
+
+
+                                                            <!-- <div class="col-md-6 name" style="padding-left: 0px;">
+                                                            <label class="col-lg-12">
+                                                                   Recived
+                                                                </label>
+
+                                                                <label class="col-lg-12 value">
+                                                                    {{obj.totalConsumer}}
+                                                                </label>
+
+                                                            </div> -->
+
+                                                        </div>
+
+                                                       <!--  <div class="col-md-6 name">
+                                                        <label class="col-lg-12">
+                                                               Reading
+                                                            </label>
+
+                                                            <label class="col-lg-12 value">
+                                                                {{obj.reading_completed}} %
+                                                            </label>
+
+                                                        </div> -->
+                                                        <div class="col-md-12 name" style="padding-left: 30px;">
+                                                            <label>Current Meter Reader<label>
+                                                        </div>
+                                                        <div class="col-md-12 value" style="padding-left: 30px;">
+                                                              <label  style="word-wrap: break-word;"> {{obj.cureentmr}} <label>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row static-info eu_custom_card_bottom_dispatch">
+
+                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                <!-- <a onclick='assign_samemr_revisit({{obj.route.id}})' href="#">To Same MR</a> -->
+                                                            </div>
+                                                            <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                            {% if  obj.is_schedule_completed%}
+                                                            Schedule Completed
+                                                            {% else %}
+                                                                <a onclick='get_mrdeatils_revisit({{obj.route.id}})' href="#">To New MR</a>
+                                                                    {% endif %}
+
+
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            </div>
+                                            </form>
+
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                               
+                            </div>
+
+
+                    </div>
+
+
+                </div>
+                <!-- END PAGE CONTENT INNER -->
+
+            </div>
+
+
+                            </div>
+                            <!-- End: life time stats -->
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT INNER -->
+
+            </div>
+        <!-- </div> -->
+        <!-- END PAGE CONTENT BODY -->
+        <!-- END CONTENT BODY -->
+    <!-- </div> -->
+    <!-- END CONTENT -->
+</div>
+<div class="modal fade bs-modal-lg" id="history" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h3 class="modal-title">Dispatch To New MR</h3>
+               <!--  <div class="actions">
+                    <div class="col-md-3 col-sm-6">
+                        <div>Bill Cycle Code : <span id="billcyclecode"> </span></div>
+                        <div> Route Code : <span id="routecode"> </span</div>
+                    </div>
+             </div> -->
+            </div>
+            <div class="modal-body" id="modalbody" style="padding: 0px !important;">
+            </div>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="assignmrrevisit();">Dispatch</button>
+                <!-- <button type="button" class="btn btn-success" onclick="assignmr();">Dispatch $ Next</button> -->
+                <!-- <button type="button" class="btn btn-success">Dispatch And Next</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END CONTAINER -->
+
+
+
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/dispatch.js'%}" type="text/javascript"></script>
+{% endblock %}
+
+</body>
+</html>

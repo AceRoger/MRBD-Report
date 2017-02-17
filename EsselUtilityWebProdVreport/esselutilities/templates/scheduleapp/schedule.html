@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Essel|User </title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{%load staticfiles%}
+{% load billCycleFilter %}
+
+{% block content %}
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>Schedule</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                        <label class="col-md-12"
+                               style="margin-bottom: 30px!important;color: #ed1847 !important;font-size: 14px !important;">
+                            Meter Reading &gt;<span style="color: #505050 !important;">Schedule</span>
+                        </label>
+                            <!-- Begin: life time stats -->
+                            <div class="portlet light portlet-fit portlet-datatable ">
+                                <div class="portlet-title">
+                                    <div class="col-md-2">
+                                        <select required class="form-control" id="monthYear" style="margin-top: 5px"
+                                                name="">
+
+                                            {% for month in monthYears %}
+                                            <option value="{{month.value}}">
+                                                {{month.text}}
+                                            </option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="font-hg1 font-black-flamingo" id="lbl_totalCopied">{{Copied}}
+                                            Total</label>
+                                        <label class="font-md font-black-flamingo"></label>
+                                        <label class="font-hg font-black-flamingo">|</label>
+
+                                        <label class="font-hg1 summary font-green-jungle" id="lbl_totalConfirmed">{{Confirmed}}
+                                        </label> <label class="font-md font-green-jungle">
+                                        Confirmed</label>
+
+                                        <label class="font-hg1 summary font-grey-mint" id="lbl_totalNotConfirmed">{{NotConfirmed}}
+                                        </label> <label class="font-md font-black-flamingo">
+                                        Not Confirmed</label>
+
+                                        <label class="font-hg1 summary font-blue" id="lbl_totalPendding">{{PendingApproval}}
+                                        </label> <label class="font-md font-blue">
+                                        Pending</label>
+
+                                        <label class="font-hg1 summary font-red-flamingo" id="lbl_totalRejected">{{Rejected}}
+                                        </label> <label class="font-md font-red-flamingo">
+                                        Rejected</label>
+
+                                    </div>
+                                    <div class="actions">
+                                          <!--{% if Copied <= 0%}-->
+                                            <!--<button type="button" data-toggle="modal" onclick="copyFromPrev();"-->
+                                                    <!--class="copy_from_prev_button eu_custom_portlet_title_not_confirmed" style="color: #FFF;">-->
+                                                <!--Copy from Previous-->
+                                            <!--</button>-->
+                                            <!--{% else %}-->
+                                            <!--<button type="button" class="copy_from_prev_button eu_custom_portlet_title_not_confirmed" style="color: #FFF;">-->
+                                                <!--Copy from Previous-->
+                                            <!--</button>-->
+                                            <!--{% endif%}-->
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="bg-grey btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                <a data-toggle="modal" style="color: #FFF;" onclick="copyFromPrev();" type="submit">
+                                                    Copy Schedule from Prev
+                                                </a>
+                                            </label>
+                                        </div>
+                                        <div class="setmargin3 btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                <a data-toggle="modal" style="color: #FFF;" onclick="createNewSchedule();"
+                                                   type="submit">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    Create New </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-title" style="padding-top: 20px !important;">
+                                    <div class="filter">
+                                        <div class="row">
+                                            <!--<div class="col-md-4" style="padding-right: 0px !important;">-->
+                                                <!--<input type="checkbox">Select All-->
+                                                <!--<label class="setmargin2 font-black-flamingo">|</label>-->
+                                                <!--<a class="setmargin2" style="color: #ed1847;" href="#">Confirm</a>-->
+                                                <!--<label class="setmargin2 font-black-flamingo">|</label>-->
+                                                <!--<a class="setmargin2" style="color: #ed1847;" href="#">Export</a>-->
+                                            <!--</div>-->
+
+                                            <div class="setmargin1 col-md-2 name" style="padding-left: 0px !important;">
+                                                <input type="text" id="searchTxt" placeholder="Search"
+                                                       style="margin-top: -6px;"
+                                                       class="form-control"/></div>
+                                            <div class="col-md-2 setmargin3" style=" width: 17.667%;">
+                                                <label>Filter by :<label class="setmargin">Schedule Date</label> </label>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top: -6px;">
+                                                <select required class="form-control" id="filterBy">
+                                                    {% for filter in Filters%}
+                                                    <option value="{{filter.value}}">{{filter.text}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="scheduleBody" class="portlet-body">
+
+
+                                    <div class="portlet-body">
+                                        <input type="hidden" id="totalCopied" value="{{Copied}}">
+                                        <input type="hidden" id="totalNotConfirmed" value="{{NotConfirmed}}">
+                                        <input type="hidden" id="totalConfirmed" value="{{Confirmed}}">
+                                        <input type="hidden" id="totalPendding" value="{{PendingApproval}}">
+                                        <input type="hidden" id="totalRejected" value="{{Rejected}}">
+
+                                        {% if Copied == 0 %}
+                                        <div class="tabbable-line">
+                                            <p> There are no schedules defined for current month. You can copy and
+                                                confirm schedule from the previous month or create new schedule. </p>
+                                        </div>
+                                        {% else %}
+                                        <div class="tabbable-line">
+                                            <div class="row eu_custom_tab_row">
+                                                {%for billSchedule in billSchedules%}
+
+                                                {% if billSchedule.status == 'Not Confirmed' %}
+
+
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border eu_custom_portlet_title_not_confirmed">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-12 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left"
+                                                                     style="border-bottom-right-radius: 10px !important; border-right: 0px">
+                                                                   <a data-toggle="modal" class="cpink"
+                                                                       onclick="changeSchedule({{billSchedule.id}})">Change & Confirm</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Confirmed' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_confirmed" style="margin-bottom: 11px !important;"> <!-- style="margin-bottom: 10px !important;"  Added style here for Adjustment -->
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height" >
+                                                            <div class="row static-info setmargin6" >
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                       <!--<center>Bill Month : {{billSchedule.month|month}}</center>-->
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6" >
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a data-toggle="modal"
+                                                                       onclick="changeInConformTab({{billSchedule.id}})"
+                                                                       class="cpink">Change</a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="showHistory({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Pending Approval' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border2 eu_custom_portlet_title_pending">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                       <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="sendReminder({{billSchedule.id}});">
+                                                                        Send Reminder </a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="pendingHistory({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% elif billSchedule.status == 'Rejected' %}
+                                                <div class="col-md-3 testVal col-sm-6"
+                                                     id="{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}">
+                                                    <div class="portlet yellow-crusta"
+                                                         style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                        <!-- <div style="background-color: #686868;" class="portlet-title"> -->
+                                                        <div class="portlet-title portlet-border2 eu_custom_portlet_title_rejected">
+
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+
+                                                                <label style="font-size: 20px; color: #FFF;">{{billSchedule.billSchedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{billSchedule.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="portlet-body schedule_tls_height">
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center><b>{{billSchedule.billSchedule.bill_cycle.bill_cycle_name}}</b></center>
+                                                                        <hr class="hrline1"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.start_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.end_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info setmargin6">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Accounting Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.accounting_date}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Estimated Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        {{billSchedule.estimated_date}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="changeInRejectedTab({{billSchedule.id}})">Change</a>
+                                                                </div>
+
+                                                                <div class="col-md-6 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                    <a class="cpink" data-toggle="modal"
+                                                                       onclick="rejectedHistoryBtn({{billSchedule.id}})">History</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endif%}
+
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End: life time stats -->
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT INNER -->
+            </div>
+        </div>
+        <!-- END PAGE CONTENT BODY -->
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- End New Schedule Modal -->
+<div class="modal" id="addNewCycleCode" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #FFF;"></button>
+                <h4 class="modal-title">Add Bill Cycle</h4>
+            </div>
+            <form id="billCycleFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row" id="bccErrorMsg">
+                        <div class="form-group col-lg-6">
+                            <label> Bill Cycle Code </label>
+                            <span class="required">*</span>
+                            <input type="text" name="addCycleCode" required id="addCycleCode" placeholder="Bill Cycle Code"
+                                   class="form-control"/>
+                            <label class="error" id="cycleLabel" style="color:red; display:none;"></label>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Bill Cycle Name </label>
+                            <span class="required">*</span>
+                            <input type="text" name="addCycleName" required id="addCycleName" placeholder="Bill Cycle Name"
+                                   class="form-control"/>
+                            <label class="error" id="nameLabel" style="color:red; display:none;"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> City </label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" name="city" required id="city" placeholder="Select City">
+                                <option value="0">Select City</option>
+                                {% for city in City %}
+                                <option value="{{city}}">
+                                    {{city}}
+                                </option>
+                                {%endfor%}
+                            </select>
+                            <label class="error" id="cityLabel" style="color:red; display:none;"></label>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Utility </label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" name="utility" required id="utility" placeholder="Select Utility">
+                                <option value="0">Select Utility</option>
+                                {% for util in Utility %}
+                                    <option value="{{util}}">
+                                        {{util}}
+                                    </option>
+                                {%endfor%}
+                            </select>
+                            <label class="error" id="utilityLabel" style="color:red; display:none;"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Zone </label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" name="zone" required id="zone" placeholder="Select Zone">
+                                <option value="0">Select Zone</option>
+                                {% for zone in Zone %}
+                                <option value="{{zone}}">
+                                    {{zone}}
+                                </option>
+                                {%endfor%}
+                            </select>
+                            <label class="error" id="zoneLabel" style="color:red; display:none;"></label>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Area</label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" name="area" required id="area" placeholder="Select Area">
+                                <option value="0">Select Area</option>
+                                {% for area in Area %}
+                                    <option value="{{area}}">
+                                        {{area}}
+                                    </option>
+                                {%endfor%}
+                            </select>
+                            <label class="error" id="areaLabel" style="color:red; display:none;"></label>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="hide" id="add_bcc_btn"/>
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="bcc_Submit_btn" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Start Create New Schedule Modal -->
+<div class="modal" id="createNewSchedule" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #FFF;"></button>
+                <h4 class="modal-title">Bill Schedule</h4>
+            </div>
+            <form id="scheduleFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Bill Month </label>
+                            <span class="required">*</span>
+                            <select class="form-control" name="billMonth" required id="billMonth">
+                                <option value=""> Select Bill Month</option>
+                                {% for month in monthYears %}
+                                <option value="{{month.value}}">
+                                    {{month.text}}
+                                </option>
+                                {%endfor%}
+                            </select>
+                            <label class="error" id="monthLabel" style="display:none;"></label>
+                        </div>
+                        <!--<div class="form-group col-lg-6">-->
+                            <!--<label> Bill Cycle Code </label>-->
+                            <!--<span class="required">*</span>-->
+                            <!--<input type="text" name="billCycleCode" required id="billCycleCode" placeholder="Bill Cycle Code"-->
+                                   <!--class="form-control"/>-->
+                            <!--<label class="error" id="codeLable" style="display:none;"></label>-->
+                        <!--</div>-->
+                        <div class="form-group col-lg-6">
+                            <a class="fa fa-plus" data-toggle="modal" onclick="addNewBCC();"></a>
+                            <label>Bill Cycle Code </label>
+                            <span class="required">*</span>
+                            <select class="form-control" name="billCycleCode" required id="billCycleCode">
+                                <option value=""> Select Bill Code</option>
+                                {% for cycle in BillCycles %}
+                                    <option value="{{cycle}}">
+                                        {{cycle.bill_cycle_code}} - {{cycle.bill_cycle_name}}
+                                    </option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 ">
+                            <label> Start Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="startDate" id="startDate"
+                                       class="form-control datepickerDate"/>
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label> End Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="endDate" id="endDate" class="form-control datepickerDate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label> Accounting Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="accountingDate" id="accountingDate"
+                                       class="form-control datepickerDate" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Estimated Date </label>
+                            <span class="required">*</span>
+                                <input type="text" name="estimatedDate" id="estimatedDate"
+                                       class="form-control datepickerDate" required>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="hide" id="schedule_sbt_btn">
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submit_btn" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End New Schedule Modal -->
+
+<!-- Start changeBillSchedule Modal -->
+<div class="modal" id="changeBillSchedule" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Change Bill Schedule</h4>
+            </div>
+            <form id="changeScheduleFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Bill Month : </label><br>
+                            <span type="text" name="changeBillMonth" id="changeBillMonth"> </span>
+
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Bill Cycle Code : </label><br>
+                            <span type="text" name="dataBillCycleCode" id="dataBillCycleCode"> </span>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-md-6 ">
+                            <label> Start Date</label>
+                            <span class="required">*</span>
+                                <input type="hidden" id="changeSchedule_id" name="id"/>
+                                <input type="text" name="dataStartDate" id="dataStartDate" required
+                                       class="form-control datepickerDate"/>
+                            <!--<input type="text" name="dataStartDate" id="dataStartDate" class="form-control"  readonly />-->
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Estimated Date </label>
+                            <span class="required">*</span>
+                                <input type="text" name="dataEstimatedDate" id="dataEstimatedDate" required
+                                       class="form-control datepickerDate"/>
+                            <!--<input type="text" name="dataEstimatedDate" id="dataEstimatedDate" class="form-control" readonly />-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label> End Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="changeEndDate" id="changeEndDate" required
+                                       class="form-control datepickerDate"/>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Accounting Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="changeAccountingDate" id="changeAccountingDate" required
+                                       class="form-control datepickerDate"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="hide" id="change_sbt_btn">
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="changeSubmitButton" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Create Schedule Modal -->
+<!-- Start changeConformedSchedule Modal -->
+<div class="modal" id="changeConformedSchedule" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Change Bill Schedule</h4>
+            </div>
+            <form id="coformedScheduleFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Bill Month </label><br>
+                            <span type="text" name="changeBillMonth" id="changeInConformMonth"> </span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Bill Cycle Code </label><br>
+                            <span type="text" name="dataBillCycleCode" id="conformBillCycleCode"> </span>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-md-6 ">
+                            <label> Start Date </label><br>
+                            <span type="text" name="dataStartDate" id="conformStartDate"> </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Estimated Date </label><br>
+                            <input type="hidden" id="confirmSchedule_id" name="id"/>
+                            <!--<span class="required">*</span>-->
+                                <!--<input type="text" name="dataEstimatedDate" id="conformEstimatedDate" required-->
+                                       <!--class="form-control datepickerDate"/>-->
+                            <span type="text" name="dataEstimatedDate" id="conformEstimatedDate"> </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label> End Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="conformEndDate" id="conformEndDate" required
+                                       class="form-control datepickerDate"/>
+                                <input type="hidden" id="hiddenEnd" name="hiddenEnd"/>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Accounting Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="conformAccountingDate" id="conformAccountingDate" required
+                                       class="form-control datepickerDate"/>
+                                <input type="hidden" id="hiddenAccounting" name="hiddenAccounting"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="hide" id="confirm_sbt_btn"/>
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="conformSubmitButton" class="btn btn-success">Submit for Approval
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End changeConformedSchedule Modal -->
+
+<!-- Start changeRejectedSchedule Modal -->
+<div class="modal" id="changeRejectedSchedule" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Change Bill Schedule</h4>
+            </div>
+            <form id="rejectedScheduleFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Bill Month </label><br>
+                            <span type="text" name="rejectedMonth" id="rejectedMonth"> </span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label> Bill Cycle Code </label><br>
+                            <span type="text" name="rejectedCode" id="rejectedCode"> </span>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-md-6 ">
+                            <label> Start Date </label><br>
+                            <span type="text" name="rejectedStart" id="rejectedStart"> </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Estimated Date </label><br>
+                            <span type="text" name="rejectedEstimate" id="rejectedEstimate"> </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label> End Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="rejectedEnd" id="rejectedEnd" required
+                                       class="form-control datepickerDate"/>
+                                <input type="hidden" id="hideRejectEnd" name="hideRejectEnd"/>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label> Accounting Date</label>
+                            <span class="required">*</span>
+                                <input type="text" name="rejectedAccounting" id="rejectedAccounting" required
+                                       class="form-control datepickerDate"/>
+                                <input type="hidden" id="hideRejectAcc" name="hideRejectAcc"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="rejectedSchedule_id" name="rejectedSchedule_id"/>
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="submit" id="rejectedApprovalbutton" class="btn btn-success">
+                    Submit for Approval
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End changeRejectedSchedule Modal -->
+
+<div class="modal" id="history" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> History </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label class="font-grey-mint">Bill Cycle Code </label><br>
+                        <!--<input type="text" name="pendingBCC" id="pendingBCC" class="form-control"-->
+                        <!--readonly/>-->
+                        <span name="historyBCC" id="historyBCC"> </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="form-group col-md-3 ">
+                        <label class=" font-grey-mint">Start Date</label><br>
+                        <span name="historyStartDate" id="historyStartDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">End Date </label><br>
+                        <span name="historyEndDate" id="historyEndDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">Accounting Date </label><br>
+                        <span name="historyAccountingDate" id="historyAccountingDate">  </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">Estimated Date</label><br>
+                        <span name="historyEstimatedDate" id="historyEstimatedDate">  </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="form-group col-md-6 ">
+                        {% if Approver == ""%}
+                        <label class="font-grey-mint"> </label>
+                        {% else %}
+                        <label class="font-grey-mint">Approvar</label><br>
+                        <span name="conformApprove" id="conformApprove"> {{ Approver }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label class="font-grey-mint">Remark</label><br>
+                        <span name="conformRemark" id="conformRemark" style="word-wrap: break-word;">{{ remark }} </span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="historyId" name="historyId"/>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="pendingHistory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> History </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label class="font-grey-mint">Bill Cycle Code </label><br>
+                        <!--<input type="text" name="pendingBCC" id="pendingBCC" class="form-control"-->
+                        <!--readonly/>-->
+                        <span name="pendingBCC" id="pendingBCC"> </span>
+                    </div>
+                </div>
+                <div style="font-size: 16px !important; padding-bottom: 20px;">
+                    <span width="18%">
+                        Original Schedule
+                    </span>
+                </div>
+                <div class="row ">
+                    <div class="form-group col-md-3 ">
+                        <label class=" font-grey-mint">Start Date</label><br>
+                        <span name="pendingStartDate" id="pendingStartDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">End Date </label><br>
+                        <span name="pendingEndDate" id="pendingEndDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">Accounting Date </label><br>
+                        <span name="pendingAccountingDate" id="pendingAccountingDate">  </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">Estimated Date</label><br>
+                        <span name="pendingEstimatedDate" id="pendingEstimatedDate">  </span>
+                    </div>
+                </div>
+
+                <div id="change">
+
+                </div>
+            </div>
+            <input type="hidden" id="pendingHistoryId" name="pendingHistoryId"/>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="rejectedHistory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"> Rejected Bill Schedule</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label class="font-grey-mint">Bill Month </label><br>
+                        <span name="rejectedBillMonth" id="rejectedBillMonth"> </span>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="font-grey-mint">Bill Cycle Code </label><br>
+                        <span name="rejectedBCC" id="rejectedBCC"> </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="form-group col-md-3 ">
+                        <label class="font-grey-mint">Start Date</label><br>
+                        <span name="rejectedStartDate" id="rejectedStartDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">End Date </label><br>
+                        <span name="rejectedEndDate" id="rejectedEndDate"> </span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label class="font-grey-mint">Extended End Date </label><br>
+                        <span name="rejectedExEndDate" id="rejectedExEndDate"> </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="form-group col-md-3 ">
+                        <label class="font-grey-mint">Accounting Date</label><br>
+                        <span name="rejectedAccountingDate" id="rejectedAccountingDate"> </span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label class="font-grey-mint">Estimated Date </label><br>
+                        <span name="rejectedEstimatedDate" id="rejectedEstimatedDate"> </span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label class="font-grey-mint">Extended Accounting Date </label><br>
+                        <span name="rejectedExAccountingDate" id="rejectedExAccountingDate"> </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label class="font-grey-mint">Approver </label><br>
+                        <span name="approver" id="approver"> </span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label class="font-grey-mint"> Remark by Approver </label><br>
+                        <span name="remark" id="remark" style="word-wrap: break-word;"> </span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="rejectedHistoryId" name="rejectedHistoryId"/>
+            <div class="modal-footer eu_custom_modal_footer">
+
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/schedule.js'%}" type="text/javascript"></script>
+
+{% endblock %}
+
+</body>
+</html>

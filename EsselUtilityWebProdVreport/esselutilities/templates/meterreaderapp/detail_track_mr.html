@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{%load staticfiles%}
+{% block content %}
+      <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 140px;
+        left: 10%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #floating-panel-2 {
+        position: absolute;
+        top: 140px;
+        left: 22%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel-3 {
+        position: absolute;
+
+       top: 140px;
+        left: 33%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel-4 {
+        position: absolute;
+        top: 140px;
+        left: 47%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+
+
+<div class="page-container">
+    <div id="floating-panel">
+    <input type="hidden"><b>Track MR:</b></input>
+    <select id="mode" onchange="get_map();">
+        <!--<option value="WALKING">Basic</option>-->
+      <option value="Basic">Basic</option>
+      <option value="Path">Path</option>
+    </select>
+    </div>
+
+    <div id="floating-panel-2">
+        <b> Select Month: </b>
+         <select required class="form-control" id="monthYear" style="margin-top: 5px" onchange="get_bill_cycle();">
+            {% for month in monthYears %}
+                <option value="{{month.value}}"{% if currentmonth == month.value %} selected {% endif %}>{{month.text}}
+                </option>
+            {%endfor%}
+        </select>
+    </div>
+
+    <div id="floating-panel-3">
+        <input type='hidden' id="mr_id" name="mr_id" value="{{mr_id}}">
+        <b> Select Bill Cycle: </b>
+         <select required class="form-control" id="billCycle" style="margin-top: 5px" onchange="get_routes();">
+              <option value=" ">Select Bill Cycle</option>
+             {% for billCycle in billCycles %}
+                <option value="{{billCycle.id}}">{{billCycle.bill_cycle_code}}
+                </option>
+            {%endfor%}
+        </select>
+    </div>
+
+ <div id="floating-panel-4">
+    <b> Select Route </b>
+     <select required class="form-control" name="routeDetail" id="routeDetail"  style="margin-top: 5px" class="form-control" onchange="get_route_path();">
+        <option value=" ">Select Route</option>
+    </select>
+</div>
+</div>
+    <div id="map"></div>
+
+
+{% endblock %}
+{% block js_block %}
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" type="text/javascript"></script>
+    <script src="{%static 'custom-js/track_mr.js'%}" type="text/javascript"></script>
+{% endblock %}
+
+</body>
+</html>

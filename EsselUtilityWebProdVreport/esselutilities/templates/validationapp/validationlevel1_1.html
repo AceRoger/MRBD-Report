@@ -1,0 +1,833 @@
+{% extends "base.html" %}
+{%load staticfiles%}
+{% load validatefilter %}
+{% block content %}
+
+<style type="text/css">
+.form-control1 {
+     width:80%;
+     height: 34px;
+     padding: 0px 0px;
+  }
+.form-control {
+
+    height: 80px;
+     padding: 0px 0px;
+  }
+.font-hg font-black-flamingo {
+ height=auto;}
+.page-content-inner {
+  width: 1160px;
+  height: auto;
+  position:relative;
+  text-align:left;
+
+
+   padding-top: 10px;
+   padding-right: 15px;
+   padding-bottom: 10px;
+   padding-left:15px;
+
+}
+.portlet {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0;
+    border-radius: 2px;
+}
+
+.portlet-body-main {
+  width: 1138px;
+  height: auto;
+  position:relative;
+  text-align:left;
+  <!--border: 0.1px solid grey;-->
+
+   padding-top: 10px;
+   padding-right: 10px;
+   padding-bottom: 10px;
+   padding-left:10px;
+
+}
+.btn-group btn-group-divide{
+width: 1120px;
+height:auto;
+}
+
+.logo {
+width:80%:
+height:60px:
+}
+
+.center-block {
+  float: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message-error {
+    background: #F47C4D;
+}
+
+.message-info {
+    background: #2C8636;
+}
+
+.eu_custom_label{
+    height: 30px;
+    line-height: 15px;
+    padding-top: 10px;
+}
+
+.eu_custom_button{
+    width: 90%;
+    height: 25px;
+    line-height: 0;
+    color: #fff !important;
+}
+
+.eu_custom_button1{
+     width: 95%;
+    height: 25px;
+    line-height: 0;
+    color: #fff !important;
+        margin-top: 5px;
+}
+
+.input-sm {
+    padding: 0px 10px !important;
+    font-size: 14px;
+    color: #505050;
+    width: 100%;
+    }
+
+.eu_custom_lh49{
+    line-height: 49px !important;
+}
+
+.eu_custom_col_md_1{
+    width: 9% !important;
+}
+
+.eu_custom_col_md_6{
+    width: 45% !important;
+}
+
+.eu_custom_select{
+    width: 100%;
+    height: 30px;
+    background: #fff;
+    color: #505050 !important;
+    padding: 0px 10px !important;
+}
+
+.mydiv{
+    height: 500px;
+    width: 500px;
+    top: 0px;
+    left: -510px;
+    display: none;
+    opacity: 1;
+    position: absolute;
+    background-color: white;
+}
+
+.mydiv1,.mydiv2,.mydiv3,.mydiv4,.mydiv5,.mydiv6,.mydiv7{
+    height: 250px;
+    width: 250px;
+    top: -100px;
+    left: -250px;
+    display: none;
+    opacity: 2;
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+}
+
+</style>
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- <div class="page-head">
+            <div class="container">
+                <div class="page-title">
+                    <h1>Validate</h1>
+                </div>
+            </div>
+        </div> -->
+        <div class="row eu_custom_heading" style="display:none;">
+            <label class="col-md-12 name" style="margin-bottom: 0px !important;">
+                <h2>Validation > for Bill Cycle Code {{billcycle.bill_cycle_code}}</h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <div class="page-content eu_custom_validation_page_content" style="padding:0px;">
+            <div class="container eu_custom_validation_container">
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <input type="hidden" id="messageid" name="messageid" value="1">
+                                <input type="hidden" id="messagename" name="messagename" value="{{ message }}">
+                             {% endfor %}
+                        {% endif %}
+                        <div class="portlet light portlet-fit portlet-datatable ">
+                            <div class="portlet-title eu_custom_pl0 eu_custom_pr0">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-1">
+                                            <div class="actions">
+                                                {% if prevValidateRecord %}
+                                                    <div class="col-md-2 name" style="float:left;">
+                                                    <div class="btn-group btn-group-devided">
+                                                        <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                            <a href="{% url 'validate:validation_level_one' billcycle.id month prevValidateRecord %}"
+                                                               style="color: #FFF;">Previous</a>
+                                                        </label>
+                                                    </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="col-md-2 name" style="float:left;">
+                                                        <div class="btn-group btn-group-devided">
+                                                            <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                                <a href="#"
+                                                                   style="color: #FFF;">Previous</a>
+                                                        </label>
+                                                    </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-1 col-sm-3 eu_custom_col_md_1">
+                                                <label class="col-lg-12">
+                                                    Remark
+                                                </label>
+                                                <div class="col-lg-12 eu_custom_p0">
+                                                    <select class="eu_custom_select">
+                                                        <option value="" selected>Select</option>
+                                                    </select>
+                                                </div>
+                                        </div> -->
+                                        <div class="col-md-1 col-sm-3 eu_custom_col_md_1">
+                                                <!-- <label class="col-lg-12">
+                                                    Remark
+                                                </label>
+                                                <div class="col-lg-12 eu_custom_p0">
+                                                   <select class="eu_custom_select">
+                                                        <option value="" selected>Select</option>
+                                                    </select>
+                                                </div> -->
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>
+                                                <a href=""><b><font color="black">Individual View</font></b></a>
+                                                <!--&lt;!&ndash;<font color="red">This is some text!</font> &ndash;&gt;-->
+                                            </label>
+                                            <label class="font-hg font-black-flamingo">|</label>
+                                            <label>
+                                                <a href="{% url 'validate:validation_level_one_listview' billcycle.id month %}"><font color="black">List View</font></a>
+                                                <!--&lt;!&ndash;<font color="red">This is some text!</font> &ndash;&gt;-->
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6 eu_custom_col_md_6">
+                                            <label class=" font-hd summary  font-black-flamingo">{{totalReadingsAssigned}} Total
+                                                Readings</label>
+                                            <label class="font-hg font-black-flamingo">|</label>
+                                            <label class="font-md summary font-green-jungle">{{totalValidated}} Completed </label>
+                                            <label class="font-md summary font-yellow-casablanca">{{totalPending}} Pending</label>
+                                            <!-- <label class=" font-hd summary font-black-flamingo">{{Unbill}}
+                                                0 Unbilled</label>
+                                            <label class="  font-hd summary  font-black-flamingo">{{DuplicateReadings}}
+                                                0 Duplicate Readings </label> -->
+                                        </div>
+                                        <div class="col-md-1" style="text-align: right;">
+                                            <div class="actions">
+                                                {% if nextValidateRecord %}
+                                                    <div class="btn-group btn-group-devided">
+                                                        <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                            <a href="{% url 'validate:validation_level_one' billcycle.id month nextValidateRecord %}"
+                                                               style="color: #FFF;">Next</a>
+                                                        </label>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="btn-group btn-group-devided">
+                                                        <label class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm ">
+                                                            <a href="#"
+                                                               style="color: #FFF;">Next</a>
+                                                        </label>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if assigned %}
+                            <div class="page-content-inner" style="width:100%;">
+                                <div class="portlet eu_custom_validation_portlet_inner">
+                                <form id="validate1form" name="validate1form" action="{% url 'validate:validation_level_one_validate' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="billcycleidtopass" name="billcycleidtopass" value="{{billcycle.id}}">
+                                    <input type="hidden" id="monthpass" name="monthpass" value="{{month}}">
+                                    <div class="portlet-title eu_cusmtom_pl20 eu_custom_validation_portlet_inner_portlet_title">
+                                        <div class="col-md-2 eu_custom_pl0">
+                                            <span class="col-lg-12" style="font-size:14px !important;padding:0px !important;">
+                                            Consumer : {{ data.consumer.consumer_no }}
+                                            </span>
+                                            <span id="validationstatus" class="col-lg-12 {% if data.is_validated %}eu_custom_validation_text_complete{% else %}eu_custom_validation_text_pending{% endif %}" style="padding:0px !important;color:white;">
+                                                {% if data.is_validated %}
+                                                    Validation 1 completed
+                                                {% else %}
+                                                    Validation 1 pending
+                                                {% endif %}
+                                            </span>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="col-md-4">
+                                                <label class="col-lg-3 eu_custom_label">Current Reading</label>
+                                                <div class="col-lg-9 eu_custom_lh49">
+                                                    <input {% if data.is_validated %} readonly {% endif %} class="input-sm" type="text" onkeypress="return isNumberKey(event, this)" id="current_meter_reading_v1" name="current_meter_reading_v1" value="{{data.meterreading.current_meter_reading}}" placeholder="Readings" onkeyup="changeConsumptionV1()">
+                                                </div>
+                                                <label class="col-lg-3 eu_custom_label">
+                                                    Remark
+                                                </label>
+                                                <div class="col-lg-9 eu_custom_lh49">
+                                                    <input {% if data.is_validated %} readonly {% endif %} class="input-sm" id="comment_v1" name="comment_v1" type="text" value="{{data.meterreading.comment}}" placeholder="Remark">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="col-lg-3 eu_custom_label">
+                                                    Meter status
+                                                </label>
+                                                <div class="col-lg-9 eu_custom_lh49">
+                                                    <select {% if data.is_validated %} disabled {% endif %} class="eu_custom_select" id="meter_status_v1" name="meter_status_v1">
+                                                        {% for meter_status in meter_status_values %}
+                                                            <option value="{{meter_status.meter_status}}" {% if data.meterreading.meter_status.meter_status ==  meter_status.meter_status  %} selected {% endif %}>{{meter_status.meter_status}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+
+                                                <label class="col-lg-3 eu_custom_label">
+                                                        Reader status
+                                                </label>
+                                                <div class="col-lg-9 eu_custom_lh49">
+                                                   <select {% if data.is_validated %} disabled {% endif %} class="eu_custom_select" id="reader_status_v1" name="reader_status_v1">
+                                                        {% for reader_status in reader_status_values %}
+                                                            <option value="{{reader_status.reader_status}}" {% if data.meterreading.reader_status.reader_status ==  reader_status.reader_status  %} selected {% endif %}>{{reader_status.reader_status}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="col-lg-3 eu_custom_label">
+                                                    Image Remark
+                                                </label>
+                                                <div class="col-lg-9 eu_custom_lh49">
+                                                    <select class="eu_custom_select" id="image_remark_v1" name="image_remark_v1" {% if data.is_validated %} disabled {% endif %}>
+                                                        <option value="Image Clear" > Image Clear </option>
+                                                        <option value="Image Not Clear"> Image Not Clear </option>
+                                                        <option value="Image Clear Without Meter No"> Image Clear Without Meter No </option>
+                                                        <option value="Wrong Image"> Wrong Image </option>
+                                                        <option value="No Meter Image"> No Meter Image </option>
+                                                        <option value="MCR Not Punched"> MCR Not Punched </option>
+                                                        <option value="No Reading Display"> No Reading Display </option>
+                                                        <option value="Previous Reading Wrong">Previous Reading Wrong  </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {% if data.is_validated %}
+                                            {% else %}
+                                            <div class="col-md-2" style="padding-top:3px !important;">
+                                                <button type="button" class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm col-lg-12 center-block eu_custom_button eu_custom_mt5" onclick="submitValidation1('{% url 'validate:validation_level_one_validate_complete' %}')">Complete
+                                                </button>
+
+                                                <button type="button" class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm col-lg-12 center-block eu_custom_button eu_custom_mt5" onclick="submitValidation()">Validate2 & next
+                                                </button>
+
+                                                <button type="button" class="bg-pink btn btn-transparent grey-salsa btn-outline btn-circle btn-sm col-lg-12 center-block eu_custom_button eu_custom_mt5" onclick="submitRevisit('{% url 'validate:validation_level_one_revisit' %}')">Revisit
+                                                </button>
+                                            </div>
+                                            {% endif %}
+
+                                    </div>
+                                    <div class="portlet-body eu_custom_p0 eu_custom_validation_portlet_inner_portlet_body">
+                                        <div class="tabbable-line eu_custom_p0">
+                                            <div class="row eu_custom_validation_row_nm" style="background: #efefef !important;">
+                                                <div class="col-md-2 col-sm-6 eu_custom_pt10">
+                                                    <div class="portlet-title">
+                                                        <div class="row static-info eu_custom_validation_row_nm">
+                                                            <div class="actions stuts eu_custom_validation_column_title">
+                                                                Consumer
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body tls_height ">
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Number</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{data.consumer.consumer_no}}
+                                                                </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Account Id</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{data.consumer.account_id}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Name</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{ data.consumer.name }}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                    Address
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.address_line_1}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <!--<div class="col-md-12 value">Mayur Colony, Karve Nagar</div>-->
+
+                                                        <br>
+                                                        <!-- <div class="row static-info">
+                                                            <div class="col-md-12 name"><b> Meter Reader detail</b>
+                                                            </div>
+                                                        </div> -->
+                                                        <div class="portlet-title eu_custom_pt15">
+                                                            <div class="row static-info eu_custom_validation_row_nm">
+                                                                <div class="actions stuts eu_custom_validation_column_title" style="color: #505050 !important;">
+                                                                    Meter Reader Details
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                    Name
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{data.meterreader.first_name}}  {{data.meterreader.last_name}}
+                                                                </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">ID </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreader.employee_id}}
+                                                                </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-sm-6 eu_custom_pt10" style="border-left:1px solid #b0b0b0;background: #ffffff !important;border-right:1px solid #b0b0b0;min-height: 930px !important;">
+                                                    <div class="portlet-title">
+                                                        <div class="row static-info eu_custom_validation_row_nm">
+                                                            <div class="col-md-12 name eu_custom_validation_column_title eu_custom_p0">
+                                                                Consumptions
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Consumption </label>
+                                                                    <label id="consumptionv1" class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.prev_reading|getConsumption:data.meterreading.current_meter_reading}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Billing Days</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.reading_date|getBillDays:data.consumer.prev_reading_date}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Meter Number</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{data.consumer.meter_no}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Kilowatt</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.killowatt}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Feeder Code </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.feeder_code}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Route ID </label>
+                                                                   <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{ route_id }}
+                                                                </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Connection Status </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.connection_status }}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Meter Digit</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.meter_digit}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Previous Feeder Code </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.prev_feeder_code}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                        Prev DTC Code
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{ route_id }}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 col-sm-6 eu_custom_pt10">
+                                                    <div class="portlet-title">
+                                                        <div class="row static-info eu_custom_validation_row_nm">
+                                                            <div class="col-md-5 name eu_custom_validation_column_title eu_custom_p0">
+                                                                Meter Reading ({{data.meterreading.reading_taken_by}})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Current Reading</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.current_meter_reading}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Previous Reading</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.prev_reading|getPrevReading}}
+                                                                    </label>
+                                                                    <input id="prevreading" type="hidden" value="{{data.consumer.prev_reading|getPrevReading}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                             <div class="col-md-6 name eu_custom_p0">
+                                                                    <div class="form-group">
+                                                                <label class="col-lg-12">
+                                                                    Current Reading Date
+                                                                </label>
+                                                                <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.reading_date}}</label>
+                                                            </div>
+                                                        </div>
+
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                        Previous Reading Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                    {{data.consumer.prev_reading_date}}
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                       Current Meter status
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.meter_status}}</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                        Previous Meter status
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.consumer.mf|getMeterStatus}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Reader Remark</label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.comment}}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                        Reader status
+                                                                    </label>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">{{data.meterreading.reader_status}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                       <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-12">
+                                                                Latitude
+                                                            </label>
+                                                            <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                            {% if data.meterreading.latitude %}
+                                                            {{data.meterreading.latitude}}
+                                                            {% else %}
+                                                            None
+                                                            {% endif %}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                            <div class="col-md-6 name eu_custom_p0">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-12">
+                                                                Longitude
+                                                            </label>
+                                                            <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold">
+                                                                {% if data.meterreading.longitude %}
+                                                                    {{data.meterreading.longitude}}
+                                                                {% else %}
+                                                                None
+                                                                {% endif %}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                           </div>
+
+
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-10 name">
+                                                                <label class="">Previous Meter Images <!--Meter Image : <b> Previous Month's </b>-->
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row static-info">
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv1">
+                                                                        <img class="zoom1"  src="{{data.consumer|getFisrtImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom1"  src="{{data.consumer|getFisrtImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv2">
+                                                                        <img class="zoom2"  src="{{data.consumer|getSecondImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom2"  src="{{data.consumer|getSecondImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv3">
+                                                                        <img class="zoom3"  src="{{data.consumer|getThirdImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom3"  src="{{data.consumer|getThirdImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row static-info">
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv4">
+                                                                        <img class="zoom4"  src="{{data.consumer|getFourthImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom4"  src="{{data.consumer|getFourthImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv5">
+                                                                        <img class="zoom5"  src="{{data.consumer|getFifthImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom5"  src="{{data.consumer|getFifthImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-3 name">
+                                                                    <div class="mydiv6">
+                                                                        <img class="zoom6"  src="{{data.consumer|getSixthImage}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom6"  src="{{data.consumer|getSixthImage}}" width="100px" height="100px" />
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-12 name eu_custom_p0">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">
+                                                                        Suspicious Activity and remark
+                                                                    </label><br>
+                                                                    <label class="col-lg-12 eu_custom_pt5 eu_custom_font_bold"> {% if data.meterreading.suspicious_activity %} yes- {{data.meterreading.suspicious_activity_remark}}{% else %} no {% endif %}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% if data.meterreading.suspicious_activity and data.meterreading.suspicious_image_url %}
+                                                         <div class="row static-info eu_custom_pt10">
+                                                            <div class="col-md-3 name">
+                                                                <!-- <div class="process-item-image img-small">
+                                                                    <span class="process-item-image-helper">
+                                                                    </span>
+                                                                    <img class="img-responsive ib mr5"  src="{{data.meterreading.suspicious_image_url}}" style="display: none;">
+                                                                </div> -->
+                                                                <div class="mydiv7">
+                                                                        <img class="zoom7"  src="{{data.meterreading.suspicious_image_url}}" width="250px" height="250px" />
+                                                                    </div>
+                                                                    <div class="thumbs">
+                                                                        <img class="zoom7"  src="{{data.meterreading.suspicious_image_url}}" width="100px" height="100px" />
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6 eu_custom_pt10">
+                                                    <div class="portlet-title">
+                                                        <div class="row static-info eu_custom_validation_row_nm">
+                                                            <div class="col-md-12 name eu_custom_validation_column_title eu_custom_p0">
+                                                                Meter Image :<b> Current Month</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body tls_height">
+                                                        <div class="col-md-12 name">
+                                                            <div class="mydiv">
+                                                                <img class="zoom"  src="{{data.meterreading.image_url}}" width="500px" height="500px" />
+                                                            </div>
+                                                            <div class="thumbs">
+                                                                <img class="zoom"  src="{{data.meterreading.image_url}}" width="250px" height="250px" />
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" id="validatorassignedid" name="validatorassignedid" value="{{data.validatorassigned_id}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            {% else %}
+                                <div class="page-content-inner">
+                                    <div class="portlet-body-main">
+                                        <div class="portlet-body">
+                                             <div class="portlet-title">
+                                                No consumers assigned for validate!
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                        <!--<div class="portlet yellow-crusta box">-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js_block %}
+<script src="{%static 'custom-js/validation.js'%}" type="text/javascript"></script>
+{% endblock %}
+</body>
+</html>

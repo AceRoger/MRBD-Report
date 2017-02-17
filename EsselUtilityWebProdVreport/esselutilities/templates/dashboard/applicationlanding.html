@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+{%load staticfiles%}
+<head>
+    <meta charset="utf-8"/>
+    <title>Essel | Userlist</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/simple-line-icons/simple-line-icons.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/uniform/css/uniform.default.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css'%}" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="{%static 'assets/global/plugins/datatables/datatables.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css'%}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'%}"
+          rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{%static 'assets/global/css/components.min.css'%}" rel="stylesheet" id="style_components"
+          type="text/css"/>
+    <link href="{%static 'assets/global/css/plugins.min.css'%}" rel="stylesheet" type="text/css"/>
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="{%static 'assets/layouts/layout3/css/layout.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/themes/default.min.css'%}" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="{%static 'assets/layouts/layout3/css/custom.min.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/ev_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/eu_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{%static 'assets/layouts/layout3/css/es_custom.css'%}" rel="stylesheet" type="text/css"/>
+    <!--<link href="{%static 'assets/layouts/layout3/css/ev_custom.css'%}" rel="stylesheet" type="text/css"/>-->
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<style type="text/css">
+    .page-header .page-header-menu {
+    background: #ed1847;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li>a>i {
+    color: white;
+    }
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li.open>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li:hover>a, .page-header .page-header-menu .hor-menu .navbar-nav>li>a:active, .page-header
+    .page-header-menu .hor-menu .navbar-nav>li>a:focus, .page-header .page-header-menu .hor-menu .navbar-nav>li>a:hover
+    {
+    color: #fff;
+    background: #B60129!important;
+    }
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li>a {
+    color: black;
+    background-color: white;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li:hover>a {
+    color: white;
+    background: #d60836;
+    }
+    .table-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #e7ecf1;
+    margin: 0px 0!important;
+    }
+
+    .btn-success {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+    .btn-success:hover {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+    .btn-success:focus {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+    .btn-success.dropdown-toggle {
+    color: #fff;
+    background-color: #51AC51;
+    border-color: #51AC51;
+    }
+
+
+    .page-header .page-header-menu .hor-menu .navbar-nav>li.active>a, .page-header .page-header-menu .hor-menu
+    .navbar-nav>li.active>a:hover, .page-header .page-header-menu .hor-menu .navbar-nav>li.current>a, .page-header
+    .page-header-menu .hor-menu .navbar-nav>li.current>a:hover {
+    color: #f1f1f1;
+    background: #B60129;
+    }
+    .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu li.active>a, .page-header .page-header-menu
+    .hor-menu .navbar-nav>li .dropdown-menu li.active>a:hover, .page-header .page-header-menu .hor-menu .navbar-nav>li
+    .dropdown-menu li.current>a, .page-header .page-header-menu .hor-menu .navbar-nav>li .dropdown-menu
+    li.current>a:hover {
+    color: white;
+    background: #b60129;
+    }
+    .page-header .page-header-top .page-logo .logo-default {
+    margin: 5px;
+    margin-top: 0px !important;
+    }
+
+    .portlet.box.yellow-crusta {
+    border: 1px solid #D6D6D6;
+    border-top: 0;
+    }
+
+    .portlet.box.yellow-crusta > .portlet-title, .portlet.yellow-crusta, .portlet > .portlet-body.yellow-crusta {
+    background-color: #D6D6D6;
+
+    }
+
+    .portlet.box.yellow-crusta > .portlet-title > .caption, .portlet.box.yellow-crusta > .portlet-title > .caption > i {
+    color: #434343;
+
+    }
+    .stuts{
+    font-size: 14px;
+    color: #434343;
+    margin-top: 5px;
+    }
+    .summary{
+    padding: 0px 0px 0px 10px;
+    }
+
+    .tls_height{
+    height: 258px;
+
+    }
+    .tls_revisit{
+    height: 30px;
+
+    }
+
+    .schedule_tls_height{
+    height: 288px;
+    }
+    .dispatch_tls_height{
+    height: 156px;
+    }
+
+    .tls_bottom {
+    position: absolute;
+    bottom: 40px;
+    }
+
+    .dispatch_height{
+    height: 235px;
+    }
+
+
+
+    #processing{
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    margin: 0px auto;
+    z-index: 1000;
+    background-color: #FFF;
+    background-image: none;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-repeat: repeat;
+    background-size: inherit;
+    opacity: 0.5;
+}
+
+#loading{
+    width: 36%;
+    height: 22px;
+    position: absolute;
+    top: 26%;
+    left: 32%;
+    margin: -28px 0px 0px -25px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+}
+
+#content{
+width:200px;
+height:100px;
+}
+
+</style>
+
+<body class="page-container-bg-solid page-header-menu-fixed page-boxed" style="overflow-x: hidden;">
+<div class="page-header">
+    <!-- BEGIN HEADER TOP -->
+    <div class="page-header-top">
+        <div class="container">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="javascript:;">
+                    <img src="{%static 'assets/layouts/layout3/img/essel_logo.png'%}" alt="logo" class="logo-default"/>
+                </a>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler"></a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <span class="username username-hide-mobile" style="cursor:default;">Muzzafarpur</span>
+                        </a>
+                      
+                    </li>
+
+                    <li class="droddown dropdown-separator">
+                        <span class="separator"></span>
+                    </li>
+
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <img alt="" class="img-circle" src="{%static 'assets/layouts/layout3/img/avatar.png'%}"/>
+                            <span class="username username-hide-mobile">{{request.user.username}}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a data-toggle="modal" onclick="changedPassword();">
+                                    <i class="icon-lock"></i> Change Password </a>
+                            </li>
+                            <li>
+                                <a href="/authen/logout">
+                                    <i class="icon-key"></i> Log Out </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <!-- END HEADER TOP -->
+</div>
+<div id="processing" style="display:none;">
+    <div id="loading">
+        <img src="{%static 'assets/layouts/layout3/img/25.gif'%}" style="height : 100px;">
+    </div>
+</div>
+
+
+<div class="page-container">
+    <div class="page-content-wrapper">
+    </div>
+    <div class="row eu_custom_heading">
+        <label class="col-md-12 name" style="color: #ed1847;"><h2> Smart Utilities Applications </h2></label>
+    </div>
+    <label class="col-md-12" style="margin-top: 22px !important;padding-left: 20px;margin-bottom: 30px !important;">
+
+    </label>
+    <div class="page-content-inner">
+        <div class="tabbable-line">
+            <div class="row es_custom_tab_row" style="margin-left: 0px !important;margin-right: 0px !important;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" >
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom text-center">
+                                <div class="page-logo">
+                                    <img src="{%static 'assets/layouts/layout3/img/meter_reading_icon.png'%}" alt="logo"
+                                         class="logo-default" />
+                                </div>
+                            </div>
+
+                            <!-- <i class="fa fa-cogs"></i> --> <a href="{% url 'mrbd_dashboard' %}">
+                            <span class="col-md-12 dash-custom-font text-center" ><h4><b><p
+                                        style="color:#FFFFFF !important; text-align: center;">Meter Reading</p></b></h4></span>
+                        </a>
+
+                        </div>
+                        <div class="dash-portlet-height">
+                             <span class="name dash-custom-sfont"><p style="font-size: 18px;">Increase efficiency of meter reading
+                         </p></span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom text-center">
+                                <div class="page-logo">
+                                    <img src="{%static 'assets/layouts/layout3/img/spotcollectin_icon.png'%}" alt="logo"
+                                         class="logo-default"/>
+                                </div>
+                            </div>
+                            <a href="">
+                                <span class="col-md-12 dash-custom-font text-center"><h4><b><p
+                                        style="color:#FFFFFF !important;">Spot Collection & Billing</p></b></h4></span>
+                            </a>
+                        </div>
+                        <div class="dash-portlet-height">
+                                <span class="dash-custom-sfont "><p>Perform billing & collection in the field
+                                       </p></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom1 text-center">
+                                <div class="page-logo">
+                                    <img src="{%static 'assets/layouts/layout3/img/vigiliance_icon.png'%}" alt="logo"
+                                         class="logo-default"/>
+                                </div>
+                            </div>
+                            <a href="">
+                                <span class="col-md-12 dash-custom-font text-center"><h4><b><p
+                                        style="color:#FFFFFF !important;text-align: center;">Vigilance</p></b></h4></span> </a>
+                        </div>
+                        <div class="dash-portlet-height">
+                               <span class="dash-custom-sfont "><p>Identify theft & increase vigilance
+                                       </p></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom text-center">
+                                <div class="page-logo">
+                                    <img src="{%static 'assets/layouts/layout3/img/servicemanagement_icon.png'%}"
+                                         alt="logo" class="logo-default"/>
+                                </div>
+                            </div>
+                            <a href="">
+                                <span class="col-md-12 dash-custom-font2 text-center"><h4><b><p
+                                        style="color:#FFFFFF !important;text-align: center;">Service Management (O&M)</p></b></h4></span>
+                            </a>
+                        </div>
+                        <div class="dash-portlet-height">
+                                <span class="dash-custom-sfont "><p>Perform scheduled & unscheduled maintenance in field
+                                       </p></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row es_custom_tab_row" style="margin-left: 0px !important;margin-right: 0px !important;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom text-center">
+                                <div class="page-logo">
+                                    <img src="{%static 'assets/layouts/layout3/img/assestmanagement_icon.png'%}"
+                                         alt="logo" class="logo-default"/>
+                                </div>
+                            </div>
+                            <a href="">
+                                <span class="col-md-12 dash-custom-font text-center"><h4><b><p style="text-align: center;color:#FFFFFF !important;">Asset Management</p></b></h4></span>
+                            </a>
+                        </div>
+                        <div class="dash-portlet-height">
+                            <span class="dash-custom-sfont "><p>Manage & maintain field asset effectively
+                                       </p></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                    <div class="portlet yellow-crusta box" style="border-radius:10px !important;">
+                        <div class="portlet-title dash-portlet-box">
+                            <div class="caption dash-logo-custom2 text-center">
+                                    <div class="page-logo">
+                                        <img src="{%static 'assets/layouts/layout3/img/mobile_icon.png'%}" alt="logo"
+                                             class="logo-default"/>
+                                    </div>
+                            </div>
+                            <a href="">
+                                <span class="col-md-12 dash-custom-font text-center"><h4><b><p
+                                        style="text-align: center;color:#FFFFFF !important;">Mobile Consumers</p></b></h4></span> </a>
+                        </div>
+                        <div class="dash-portlet-height">
+                            <span class="dash-custom-sfont "><p>Manage mobile users</p></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{%static 'assets/global/plugins/respond.min.js'%}"></script>
+<script src="{%static 'assets/global/plugins/excanvas.min.js'%}"></script>
+
+<!-- BEGIN CORE PLUGINS -->
+<script src="{%static 'assets/global/plugins/jquery.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap/js/bootstrap.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/js.cookie.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/jquery.blockui.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/uniform/jquery.uniform.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js'%}"
+        type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{%static 'assets/pages/scripts/table-datatables-buttons.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/scripts/datatable.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/datatables/datatables.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js'%}"
+        type="text/javascript"></script>
+<script src="{%static 'assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js'%}"
+        type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="{%static 'assets/global/scripts/app.min.js'%}" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="{%static 'assets/layouts/layout3/scripts/layout.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/layouts/layout3/scripts/demo.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'assets/layouts/global/scripts/quick-sidebar.min.js'%}" type="text/javascript"></script>
+
+<script src="{%static 'custom-js/jquery.validate.js'%}" type="text/javascript"></script>
+<script src="{%static 'custom-js/bootbox.min.js'%}" type="text/javascript"></script>
+<script src="{%static 'custom-js/base.js'%}" type="text/javascript"></script>
+
+<!-- END THEME LAYOUT SCRIPTS -->
+
+
+
+
+</body>
+</html>

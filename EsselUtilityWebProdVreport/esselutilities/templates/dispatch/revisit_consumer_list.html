@@ -1,0 +1,70 @@
+
+<table class="table table-striped eu_custom_table_no_border" id="table-consumer-listt" style="width: 100%;">
+                                                <thead style="background: #ededed !important;" >
+                                                    <tr>
+                                                            <!-- <th class="text-center eu_custom_p0">Select</th> -->
+                                                            <th class="text-center eu_custom_p0">Route</th>
+                                                            <th class="text-center eu_custom_p0 " width="12%">Consumer Number</th>
+                                                            <th class="text-center eu_custom_p0" width="12%">Consumer Name</th>
+                                                            <th class="text-center eu_custom_p0" width="12%">Meter Number</th>
+
+
+                                                            <th class="text-center eu_custom_p0">Meter Reader Name</th>
+                                                            <th class="text-center eu_custom_p0">status</th>
+                                                            <th class="text-center eu_custom_p0">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                {% for consumerDetailOne in consumerDetails %}
+
+                                                    <tr>
+                                                    <form id="mrdetailsformrevisit{{consumerDetailOne.route.id}}" name="mrdetailsformrevisit{{consumerDetailOne.route.id}}" action="{% url 'dispatch:get_mrlist_revisit_list' %}" method="post">
+                                                        {% csrf_token %}
+                                                    <input type="hidden" id="route" name="route" value="{{consumerDetailOne.route.id}}">
+                                                    <input type="hidden" id="bill_month" name="bill_month" value="{{bill_month}}">
+                                                    <input type="hidden" id="jobcard_id" name="jobcard_id" value="{{consumerDetailOne.jobcard_id}}">
+
+                                                        <!-- <td class="text-center">
+                                                            <input type="checkbox" name="consumer" value="consumer">
+                                                        </td> -->
+                                                         <td class="text-center">{{consumerDetailOne.route_code}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.consumer_no}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.name}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.meter_no}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.last_mr}}</td>
+                                                        <td class="text-center">{{consumerDetailOne.status}}</td>
+                                                        <td class="text-center">
+                                                        {%if consumerDetailOne.is_schedule_completed %}
+
+                                                        Complete
+                                                        {%else%}
+                                                        {%if consumerDetailOne.is_readingcompleted %}
+
+                                                        Reading Complete
+
+                                                        {%else%}
+
+                                                            {%if consumerDetailOne.is_lastmr %}
+
+                                                             <a onclick='do_deassign_revisit({{consumerDetailOne.route.id}})' href="#">Deassign</a>
+
+                                                            <a onclick='get_mrdeatils_revisit_list({{consumerDetailOne.route.id}})' href="#">Reassign</a>
+                                                            
+
+                                                            {% else %}
+
+                                                            <a onclick='get_mrdeatils_revisit_list({{consumerDetailOne.route.id}})' href="#">To New MR</a>
+  
+
+                                                        {%endif%}
+                                                        
+                                                        {%endif%}
+                                                        {% endif %}</td>
+                                                        </form>
+                                                    </tr>
+
+                                                {% endfor %}
+
+
+                                                </tbody>
+                                            </table>

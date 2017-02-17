@@ -1,0 +1,23 @@
+<table class="table eu_custom_table_no_border" id="meter_reader">
+    <div style="font-size: 20px !important;">Available MR</div><br>
+    <tbody>
+    {% if meterReaders%}
+        {% for meterReader in meterReaders %}
+            {%if meterReader.count <= 10%}
+            <tr role="row" class="odd">
+                <td width="12%" class="sorting_1">{{ meterReader.employee_id }}</td>
+                <td width="18%">{{ meterReader.first_name }}</td>
+                <td width="12%">{{ meterReader.contact_no }}</td>
+                <td width="18%"><span class="span-search-email" id="{{ meterReader.username }}">{{ meterReader.username }}</span></td>
+                <td width="18%">{{meterReader.routeassignedcountsuggest}}</td>
+                <!-- <td width="18%">asdasdasdads</td> -->
+                <td width="12%"><input type="radio" name="ss" value="{{ meterReader.id }}" id="ss" width="12%"/></td>
+            </tr>
+            {%endif%}
+        {% endfor %}
+    {% else %}
+    <div class="col-md-5 name"></div>
+            <div class="col-md-5 name"><b>No Meter Reader Found!</b></div>
+    {% endif %}
+    </tbody>
+</table>

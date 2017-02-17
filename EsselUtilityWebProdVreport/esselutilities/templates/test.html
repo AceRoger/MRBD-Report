@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<table class="table table-striped  table-hover table-bordered" id="job_profile_table">
+    <thead>
+    <tr>
+        <th style="width:35%"> Name</th>
+        <th style="width:5%"> Gender</th>
+        <th style="width:5%"> Age</th>
+        <th style="width:15%"> Mobile</th>
+        <th style="width:5%"> Qualification</th>
+        <th style="width:5%"> Job Role</th>
+        <th style="width:5%"> Exp Level</th>
+        <th style="width:5%"> Employment Status</th>
+        <th style="width:5%"> District</th>
+        <th style="width:5%"> Pincode</th>
+        <th style="width:5%"> Creation Date</th>
+        <th style="width:5%" class="text-center"> Actions</th>
+        <th style="width:5%"> Status</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for js in jobseeker_list %}
+    <tr>
+        <td> {{js.first_name}}</td>
+        <td> {{js.gender}}</td>
+        <td> {{js.date_of_birth}}</td>
+        <td> {{js.mobile}}</td>
+        <td> {{js.qualification}}</td>
+        {% for role in js.job_role %}
+        <td> {{role}}</td>
+        {% endfor %}
+        {% for lvl in js.level %}
+        <td> {{lvl}}</td>
+        {% endfor %}
+        <td> {{js.employment_status}}</td>
+        <td> {{js.city}}</td>
+        <td> {{js.pincode}}</td>
+        <td> {{js.c_date}}</td>
+        <td>
+            <div style="text-align: center;">
+                {% if js.status == 'Inactive' %}
+                <a style="text-align: center;letter-spacing: 5px;width:15%;" title="Already Shortlisted"
+                   data-toggle="modal" href="#shortlisted_jobseeker"><i class="fa fa-user"></i></a><a
+                    href="/admin-edit-jobseeker-profile/?user_id={{js.uid}}"
+                    style="text-align: center;letter-spacing: 5px;width:15%;" title="Edit" class="edit"
+                    data-toggle="modal" href="#edit_subscription"><i class="fa fa-pencil"></i></a><a id="{{js.uid}}"
+                                                                                                     onclick="delete_jobseeker_detail(this.id)"
+                                                                                                     style="text-align: center;letter-spacing: 5px;width:15%;"
+                                                                                                     title="Delete"
+                                                                                                     class="delete"
+                                                                                                     data-toggle="modal"
+                                                                                                     href="#delete_subscription"><i
+                    class="fa fa-trash"></i></a>
+                {% else %}
+                <a onclick="get_employer({{js.uid}})" style="text-align: center;letter-spacing: 5px;width:15%;"
+                   title="Shortlist Jobseeker" data-toggle="modal" href="#edit_subscription"><i class="fa fa-user"></i></a><a
+                    href="/admin-edit-jobseeker-profile/?user_id={{js.uid}}"
+                    style="text-align: center;letter-spacing: 5px;width:15%;" title="Edit" class="edit"
+                    data-toggle="modal" href="#edit_subscription"><i class="fa fa-pencil"></i></a><a id="{{js.uid}}"
+                                                                                                     onclick="delete_jobseeker_detail(this.id)"
+                                                                                                     style="text-align: center;letter-spacing: 5px;width:15%;"
+                                                                                                     title="Delete"
+                                                                                                     class="delete"
+                                                                                                     data-toggle="modal"
+                                                                                                     href="#delete_subscription"><i
+                    class="fa fa-trash"></i></a>
+                {% endif %}
+            </div>
+        </td>
+        <td> {{js.status}}</td>
+        </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<div class="col-md-offset-7" id="pid">
+    <div class="pagination">
+        <div class="col-md-12">
+            <div class="col-md-7">
+                                           <span class="step-links">
+                                                    {% if jobseeker_list.has_previous %}
+                                                        <a href="?page={{ jobseeker_list.previous_page_number }}"
+                                                           style="padding: 6px 6px;" class="btn btn-default"><i
+                                                                class="fa fa-chevron-left"></i></a>
+                                                    {% endif %}
+                                                    <span class="current">
+                                                       <a class="btn btn-default text-info"> Page {{
+                                                           jobseeker_list.number }} / {{
+                                                           jobseeker_list.paginator.num_pages }}</a>
+                                                    </span>
+                                                    {% if jobseeker_list.has_next %}
+                                                        <a href="?page={{ jobseeker_list.next_page_number }}"
+                                                           style="padding: 6px 6px;" class="btn btn-default"><i
+                                                                class="fa fa-chevron-right"></i></a>
+                                                    {% endif %}
+                                                </span>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-9">
+                    <input type="text" class="form-control input" onkeyup="get_page_number()" id="page_no"
+                           name="page_no" placeholder="  Go To Page" style="width:127%;">
+                </div>
+                <div class="col-md-3">
+                    <a id="pnum" style="padding: 6px 6px;" class="btn btn-default"><i
+                            class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

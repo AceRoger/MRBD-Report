@@ -1,0 +1,212 @@
+.ev_custom_filter_text {
+    width: 7% !important;
+    margin-right: 0px !important;
+    padding-right: 0px !important;
+    margin-top: 7px !important;
+}
+
+.ev_custom_select_box{
+    width: 19.50% !important;
+    margin-right: 20px !important;
+    margin-left: 0px !important;
+    padding-right: 0px;
+    padding-left: 0px !important;
+}
+
+.ev_custom_offset11{
+    margin-left: 90.66667% !important;
+}
+
+.ev_custom_add_btn{
+    background-color: #ed1847 !important;
+    border-color: #ed1847 !important;
+    color: #fff !important;
+}
+
+.btn_outline_pink{
+    border-color: #ed1847 !important;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #fff;
+    background-color: #d51842;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+    font-size: 18px;
+}
+
+.nav-pills>li>a, .nav-tabs>li>a {
+    font-size: 18px;
+    color: #505050;
+    margin: 0px;
+}
+
+.nav-tabs>li>a {
+    border-right: 1px solid #ddd;
+}
+.ev_custom_portlet_title {
+    /*border-bottom: 0px solid #eee !important;*/
+    border-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.portlet-title {
+    border-bottom: 0px solid #eee;
+    margin-bottom: 0px;
+}
+
+.light.portlet-fit>.portlet-title {
+    padding: 15px 20px 0px;
+}
+
+.ev_custom_portlet_header{
+    background: #fff !important;
+    height: 90px !important;
+}
+
+.ev_custom_portlet_footer{
+    background: #efefef !important;
+    height: 50px !important;
+    padding-top: 2px;
+    border-radius: 0px 0px 8px 8px !important;
+}
+
+.ev_custom_portlet_body{
+    background: #fff !important;
+    height: 230px !important;
+    border-radius: 8px !important;
+    border: 1px solid #eee;
+}
+
+.ev_custom_image_view{
+    border: 1px solid #ddd !important;
+    border-radius: 30px !important;
+    width: 60px !important;
+    height: 60px !important;
+    margin-top: 15px !important;
+}
+
+.ev_custom_title_view{
+    margin-top: 15px !important;
+}
+
+.ev_custom_label1{
+    font-size: 25px;
+    color: #505050;
+    margin-bottom: 0px;
+}
+
+.ev_custom_label2{
+    font-size: 18px;
+    color: #505050;
+}
+
+.setpadding4{
+    padding-left: 4px !important;
+}
+
+.ev_custom_header_btn{
+    margin-top: 15px;
+    font-size: 18px;
+    color: #ed1847;
+}
+
+.ev_custom_hrline {
+    display: inline-block;
+    width: 285px;
+    border-color: #626262;
+    margin: 26px 0px;
+}
+
+.ev_custom_bottom_div_text{
+    margin-top: 8px;
+    margin-left: 12px;
+}
+
+.bootstrap-switch {
+    display: inline-block;
+    direction: ltr;
+    cursor: pointer;
+    border-radius: 20px !important;
+    border: 2px solid;
+    border-color: #2dde5b !important;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    line-height: 8px;
+    z-index: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    width: 53px !important;
+    background : #2dde5b !important;
+}
+
+.bootstrap-switch-handle-on{
+	width: 27px;
+    border-radius: 14px !important
+}
+
+.bootstrap-switch-handle-off{
+    width: 27px;
+    border-radius: 14px !important
+}
+
+.bootstrap-switch-label{
+    width: 22px !important;
+	background: #2dde5b !important;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary {
+    color: #fff;
+    background: #fff;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-default, .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default {
+    color: #fff !important;
+    background: #fff;
+}
+
+.bootstrap-switch-off > .bootstrap-switch-container > .bootstrap-switch-label{
+	background: #686868 !important;
+}
+
+.bootstrap-switch-off > .bootstrap-switch-container{
+    width: 76px; margin-left: 0px !important;
+}
+
+.bootstrap-switch-on > .bootstrap-switch-container{
+    width: 76px; margin-left: -27px !important;
+}
+
+.bootstrap-switch-off > .bootstrap-switch-container > .bootstrap-switch-handle-off{
+	background: #fff !important;
+}
+
+.bootstrap-switch-off{
+    border-color: #686868 !important;
+    background: #686868 !important;
+}
+
+.testVal{
+    margin-top: 20px !important;
+}
+
+/*
+.portlet>.portlet-title {
+    border-bottom: 0px solid #eee;
+    padding: 0;
+    margin-bottom: 10px;
+    min-height: 41px;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    -o-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+*/

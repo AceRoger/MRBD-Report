@@ -1,0 +1,104 @@
+
+
+    <!--<div class="portlet-body" id="readingAssigned">-->
+        <!--<div class="tabbable-line">-->
+            <!--<div class="row eu_custom_tab_row">-->
+                <!--{%if finallist%}-->
+                <!--{% for finallist in finallist %}-->
+                <!--<div class="col-md-4 col-sm-6">-->
+                    <!--<div class="portlet yellow-crusta box"-->
+                         <!--style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">-->
+                        <!--<div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_not_confirmed"-->
+                             <!--style="margin-bottom: 10px !important;">-->
+                            <!--<div class="caption eu_custom_porlet_title_caption" style="padding: 13px;;">-->
+                                <!--<label style="font-size: 18px; color: #FFF;"> {{finallist.route}}</label>-->
+                            <!--</div>-->
+                            <!--<div class="actions eu_custom_porlet_title_actions">-->
+                                <!--<label style="font-size: 18px; color: #FFF;">{{finallist.validatepercentage}} %-->
+                                    <!--Completed </label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="portlet-body meterreader_tls_height eu_custom_bbrr_10 eu_custom_bblr_10">-->
+                            <!--<div class="row static-info">-->
+                                <!--<div class="col-md-6 name" style="padding-left: 44px;">-->
+                                    <!--{{finallist.readingrecived}}-->
+                                <!--</div>-->
+                                <!--<div class="col-md-6 name" style="padding-left: 44px;">-->
+                                    <!--{{finallist.validatedrecord}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row static-info">-->
+                                <!--<div class="col-md-6 name"><b> Readings </b></div>-->
+                                <!--<div class="col-md-6 value"><b> Validated </b></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--{% endfor%}-->
+                <!--{%else%}-->
+                <!--No Reading Assigned For This Month!!-->
+                <!--{%endif%}-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+
+                                <br>
+                                <br>
+                                <br>
+                                <div class="page-content-inner" id="readingAssigned">
+                                    <div class="portlet-body-main">
+
+                                        <div class="portlet-body eu_custom_pt0">
+                                            <table class="table table-striped eu_custom_table_no_border"
+                                                   id="userRoleTbl" style="width: 75%;">
+                                                <thead style="background: #ededed !important;">
+                                                <tr>
+                                                    <th style="width:12%;">
+                                                        <center> Month </center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center> Bill Cycle </center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center> No.Of Readings </center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center> No.Of Pendings </center>
+                                                    </th>
+                                                    <th style="width:15%;">
+                                                        <center> No.Of Completed </center>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                {% for obj in finallist %}
+                                                <tr role="row" class="even">
+                                                    <td width="20%" class="sorting_1">
+                                                        <center>{{obj.month|get_month}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.billcycle}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center> {{obj.readingrecived}}  </center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.pending}}</center>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <center>{{obj.validatedrecord}}</center>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- End: life time stats -->
+                                    </div>
+                                </div>

@@ -1,0 +1,115 @@
+<div class="portlet-body">
+<form id="mrassignform" name="mrassignform" action="{% url 'dispatch:assign_mr_revisit_list' %}" method="post">
+    {% csrf_token %}
+    
+    <input type="hidden" id="jobcard_id" name="jobcard_id" value="{{jobcard}}">
+    <input type="hidden" id="routeid" name="routeid" value="{{routeid}}">
+    <input type="hidden" id="current_month" name="current_month" value="{{current_month}}">
+    <table style="margin-left: 15px !important;margin-right: 15px !important;margin-top: 25px !important;">
+        <tr>
+            <th class="eu_custom_table_heading_primary" width="8%">Billcycle Code</th>
+            <th class="eu_custom_table_heading_primary" width="8%">Route ID</th>
+            <th class="eu_custom_table_heading_primary" width="8%">Bill Month</th>
+            <th class="eu_custom_table_heading_primary" width="8%">Due date</th>
+            <!-- {% if currentmr %}
+            <th class="eu_custom_table_heading_primary" width="8%">Current MR</th>
+            {% endif%} -->
+            <th class="eu_custom_table_heading_primary" width="8%"><input type="text" placeholder="Search" id="searchTxtDispatchModal" onkeyup="searchMrrevisit('{% url 'dispatch:search_mr_revisit' %}');" class="form-control"/> </th>
+        </tr>
+        <tr>
+            <th class="eu_custom_table_heading_secondary" width="8%" id="billcyclecode1">{{billcyclecode}}</th>
+            <th class="eu_custom_table_heading_secondary" width="8%" id="routecode1">{{routecode}}</th>
+            <th class="eu_custom_table_heading_secondary" width="8%">{{billScheduledetail.start_date}}</th>
+            <th class="eu_custom_table_heading_secondary" width="8%">{{billScheduledetail.end_date}}</th>
+        <!-- {% if currentmr %}
+            <th class="eu_custom_table_heading_secondary" width="8%">{{currentmrNames.meterreader.first_name}}</th>
+            {% endif%} -->
+            <th class="eu_custom_table_heading_secondary" width="8%"></th>
+        </tr>
+    </table>
+    <br>
+
+            <table class="table eu_custom_table_no_border" id="sample_1" style="background: #ededed !important;">
+            <thead>
+            <tr>
+                <th width="12%"> Code</th>
+                <th width="18%"> MR Name</th>
+                <th width="12%"> Contact No</th>
+                <th width="18%"> Email ID </th>
+                <th width="18%"> Routes Assigned</th>
+                <th width="12%"> Action</th>
+                <!-- <th style="text-align: center;"> Device ID</th> -->
+                <!-- <th style="text-align: center;"> EMEI</th> -->
+
+            </tr>
+            </thead>
+            </table>
+            <!--  table-striped table-bordered table-hover -->
+            <div class="table-container eu_custom_table_container">
+            <table class="table eu_custom_table_no_border" id="sample_6">
+            <div style="font-size: 20px !important;">Current MR</div>
+            <tbody>
+            {% if currentmr%}
+            <tr role="row" class="odd">
+                <td width="12%" class="sorting_1">{{ currentmrNames.meterreader.employee_id }}</td>
+                <td width="18%">{{ currentmrNames.meterreader.first_name }}</td>
+                <td width="12%">{{ currentmrNames.meterreader.contact_no }}</td>
+                <td width="18%">{{ currentmrNames.meterreader.username }}</td>
+                <td width="18%">{{currentmrcount}}</td>
+                <!-- <td width="18%">asdasdasdads</td> -->
+             <td width="12%"><input type="radio" name="ss" value="{{ currentmrNames.meterreader.id }}" id="ss" width="12%"></td>
+            </tr>
+            {%else%}
+            <div class="col-md-5 name"></div>
+            <div class="col-md-5 name"><b>No MR Found</b></div>
+            {% endif %}
+            </tbody>
+        </table>
+        </div>
+        <!-- .table>tbody>tr>td table-striped table-bordered table-hover-->
+        <div class="table-container eu_custom_table_container eu_custom_table_odd">
+        <table class="table eu_custom_table_no_border" id="sample_4">
+                <div style="font-size: 20px !important;">Suggested MR</div>
+            <tbody>
+            {%if suggested%}
+            {% for suggest in suggested %}
+            <tr role="row" class="odd">
+
+                <td width="12%" class="sorting_1">{{ suggest.employee_id }}</td>
+                <td width="18%">{{ suggest.first_name }}</td>
+                <td width="12%">{{ suggest.contact_no }}</td>
+                <td width="18%">{{ suggest.username }}</td>
+                <td width="18%">{{suggest.routeassignedcountsuggest}}</td>
+                <!-- <td width="18%">asdasdasdads</td> -->
+             <td width="12%">   <input type="radio" name="ss" value="{{ suggest.id }}" id=""></td>
+            </tr>
+            {% endfor %}
+            {%else%}
+            <div class="col-md-5 name"></div>
+            <div class="col-md-5 name"><b>No Suggested MR</b></div>
+            {%endif%}
+            </tbody>
+        </table>
+        </div>
+    <div class="table-container eu_custom_table_container" id="searchMrID">
+        <table class="table eu_custom_table_no_border" id="meter_reader">
+            <div style="font-size: 20px !important;">Available MR</div><br>
+            <tbody>
+            {% for meterReader in meterReaders %}
+            {%if meterReader.count <= 5%}
+            <tr role="row" class="odd">
+                <td width="12%" class="sorting_1">{{ meterReader.employee_id }}</td>
+                <td width="18%">{{ meterReader.first_name }}</td>
+                <td width="12%">{{ meterReader.contact_no }}</td>
+                <td width="18%"><span class="span-search-email" id="{{ meterReader.username }}">{{ meterReader.username }}</span></td>
+                <td width="18%">{{meterReader.routeassignedcountsuggest}}</td>
+                <!-- <td width="18%">asdasdasdads</td> -->
+             <td width="12%"><input type="radio" name="ss" value="{{ meterReader.id }}" id="ss" width="12%"/></td>
+            </tr>
+            {%endif%}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </form>
+</div>

@@ -1,0 +1,401 @@
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <title>Essel|User </title>
+
+            </head>
+            <body>
+
+            {% extends "base.html" %}
+
+            {%load staticfiles%}
+            {% block content %}
+            <div class="page-header navbar navbar-fixed-top">
+            <div class="page-header-top">
+            <div class="container">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+            <a href="javascript:;">
+            <img src="{%static 'assets/layouts/layout3/img/essel_logo.png'%}" alt="logo" class="logo-default"/>
+            </a>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <!--<a href="javascript:;" class="menu-toggler"></a>-->
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+
+            <ul class="nav navbar-nav pull-right">
+            <li class="dropdown dropdown-user dropdown-dark">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+            data-close-others="true">
+            <span class="username username-hide-mobile" style="cursor:default;">Muzzafarpur</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-default">
+            <li>
+            <a href="javascript:;">
+            <span class="username username-hide-mobile" style="cursor:default;">Nagpur</span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="username username-hide-mobile" style="cursor:default;">Bhopal</span>
+            </a>
+            </li>
+
+            </ul>
+            </li>
+
+            <li class="droddown dropdown-separator">
+            <span class="separator"></span>
+            </li>
+
+            <!-- BEGIN NOTIFICATION DROPDOWN -->
+            <!-- <li class="dropdown dropdown-extended dropdown-notification dropdown-dark"
+            id="header_notification_bar">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+            data-close-others="true">
+            <i class="fa fa-bell"></i>
+            <span class="badge badge-default">7</span>
+            </a>
+            <ul class="dropdown-menu">
+            <li class="external">
+            <h3>You have
+            <strong>12 pending</strong> tasks</h3>
+            <a href="javascript:;">view all</a>
+            </li>
+            <li>
+            <ul class="dropdown-menu-list scroller" style="height: 250px;"
+            data-handle-color="#637283">
+            <li>
+            <a href="javascript:;">
+            <span class="time">just now</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-success">
+            <i class="fa fa-plus"></i>
+            </span> New user registered. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">3 mins</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-danger">
+            <i class="fa fa-bolt"></i>
+            </span> Server #12 overloaded. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">10 mins</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-warning">
+            <i class="fa fa-bell-o"></i>
+            </span> Server #2 not responding. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">14 hrs</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-info">
+            <i class="fa fa-bullhorn"></i>
+            </span> Application error. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">2 days</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-danger">
+            <i class="fa fa-bolt"></i>
+            </span> Database overloaded 68%. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">3 days</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-danger">
+            <i class="fa fa-bolt"></i>
+            </span> A user IP blocked. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">4 days</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-warning">
+            <i class="fa fa-bell-o"></i>
+            </span> Storage Server #4 not responding dfdfdfd. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">5 days</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-info">
+            <i class="fa fa-bullhorn"></i>
+            </span> System Error. </span>
+            </a>
+            </li>
+            <li>
+            <a href="javascript:;">
+            <span class="time">9 days</span>
+            <span class="details">
+            <span class="label label-sm label-icon label-danger">
+            <i class="fa fa-bolt"></i>
+            </span> Storage server failed. </span>
+            </a>
+            </li>
+            </ul>
+            </li>
+            </ul>
+            </li>-->
+            <!-- END NOTIFICATION DROPDOWN -->
+
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown dropdown-user dropdown-dark">
+            <!--  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+            data-close-others="true">
+            <img alt="" class="img-circle" src="static/assets/layouts/layout3/img/avatar.png"/>
+            <span class="username username-hide-mobile">ravi@gmail.com</span>
+            </a>-->
+
+            <li>
+            <a href="/authen/signing-out">
+            <i class="icon-key"></i> Log Out </a>
+
+            </li>
+
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+            </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+            </div>
+            </div>
+            <!-- END HEADER TOP -->
+            <!-- BEGIN HEADER INNER -->
+
+
+
+            </div>
+
+            <div class="page-container">
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <!-- BEGIN PAGE HEAD-->
+
+            <!-- BEGIN HEADER TOP
+            <div class="page-header-top">
+
+            </div>
+            END HEADER TOP -->
+            <!-- BEGIN HEADER MENU -->
+            <div class="page-header-menu">
+            <div class="container">
+            <!-- BEGIN HEADER SEARCH BOX -->
+            <!-- END HEADER SEARCH BOX -->
+            <!-- BEGIN MEGA MENU -->
+            <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+            <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+            <div class="hor-menu">
+            <div class="nav navbar-nav">Application Landing
+            </div>
+            </div>
+            <!-- END HEADER MENU -->
+            </div>
+</div>
+                </div>
+            <body>
+            <div class="page-content-inner">
+                <label class="col-md-7 name"><h2>Smart Utilities Applications</h2>
+
+
+            </label>
+            <div class="tabbable-line">
+            <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+            <div class="portlet yellow-crusta box">
+
+
+            <div class="the-icons">
+
+            <i class="fa fa-square-o"  data-unicode="f096"></i>
+            </div>
+
+            <div class="row static-info">
+            <a href="/authen/dashboard" class="col-md-7 name" ><h3>Meter Reading</h3> </a>
+            </div>
+
+            <br>
+
+
+            <div class="row static-info">
+
+            <div class="col-md-7 name"> Increase efficiency of meter reading </div>
+            </div>
+
+
+            </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+
+            <div class="portlet yellow-crusta box">
+            <div class="glyphicon-class">
+            <i class="glyphicon glyphicon-unchecked" aria-hidden="true"></i>
+
+
+            </div>
+
+            <div class="row static-info">
+
+            <div class="col-md-7 name"><h3>Spot Collection and Billing</h3> </div>
+            </div>
+            <br>
+            <div class="row static-info">
+
+            <div class="col-md-7 name"> Perform billing and collection in the field </div>
+            </div>
+
+            </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+            <div class="portlet yellow-crusta box" >
+
+
+            <div class="fa-item">
+            <i class="fa fa-bell-o"></i></div>
+
+            <div class="row static-info">
+
+            <div class="col-md-7 name"><h3>Vigilance</h3></div>
+            </div>
+            <br>
+            <div class="row static-info">
+
+            <div class="col-md-7 name">Identify theft and increase vigilance
+
+            </div>
+            </div>
+
+
+            </div>
+            </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+            <div class="portlet yellow-crusta box">
+
+            <div class="fa-item" >
+            <i class="fa fa-cogs"></i>
+            </div>
+
+
+
+            <div class="row static-info">
+
+            <div class="col-md-7 name"> <h3>Service Management
+
+            ( O &M )</h3>
+
+
+            </div>
+            </div>
+            <div class="row static-info">
+
+            <div class="col-md-7 name">
+
+            Perform scheduled and unscheduled maintenance in field
+            </div>
+            </div>
+
+
+
+            </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+            <div class="portlet yellow-crusta box">
+
+            <div class="fa-item ">
+            <i class="fa fa-cogs"></i>
+
+            </div>
+
+
+
+            <div class="row static-info">
+                 <div class="col-md-12 name">
+            <h3>Mobile Consumer</h3>
+                     </div>
+
+            </div>
+
+
+            <div class="row static-info">
+            <div class="col-md-12 name">
+            Manage mobile consumer users
+            </div>
+
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+            <div class="portlet yellow-crusta box">
+
+            <div class="fa-item " >
+            <i class="fa fa-cogs"></i>
+
+            </div>
+
+
+
+            <div class="row static-info">
+                <div class="col-md-12 name">
+            <h3>Asset Management</h3>
+            </div>
+            </div>
+
+
+
+            <div class="row static-info">
+                <div class="col-md-12 name">
+            Manage and maintain field assets effectively
+            </div></div>
+
+
+            </div>
+            </div></div>
+
+
+            </div>
+
+           </div>
+            <!-- END PAGE CONTENT INNER -->
+
+
+
+
+
+
+
+            {% endblock %}
+
+            <!--{% block js_block %}-->
+            <!--<script src="{%static 'custom-js/user.js'%}" type="text/javascript"></script>-->
+            <!--{% endblock %}-->
+
+            </body>
+
+
+            </html>

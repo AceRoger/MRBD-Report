@@ -1,0 +1,208 @@
+<div class="page-content-inner">
+    <div class="tabbable-line">
+        <div class="row eu_custom_tab_row" style="margin-left: 5px !important;margin-right: 5px !important;">
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title" style="background-color: #ed1847 !important;">
+                        <div class="caption">
+                            <!-- <i class="fa fa-cogs"></i> -->Schedule
+                        </div>
+                    </div>
+                    <div class="portlet-body" style="padding-bottom: 0px !important; padding-top: 0px !important;">
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name"><span class="eu_custom_js_info eu_custom_badge_pending" id="notconfirmed"> {{NotConfirmed}} </span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_pending"> Not Scheduled </span></div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name"><span class="eu_custom_js_info eu_custom_badge_confirmed" id="confirmed"> {{Confirmed}}</span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_confirmed"> Scheduled </span></div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name"><span class="eu_custom_js_info eu_custom_badge_unbilled" id="Pending"> {{PendingApproval}} </span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_unbilled"> Pending Approval </span>
+                            </div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name"><span class="eu_custom_js_info eu_custom_badge_failed" id="Rejected"> {{Rejected}} </span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_failed"> Rejected </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title" style="background-color: #e11b47 !important;">
+                        <div class="caption">
+                            <!-- <i class="fa fa-cogs"></i> -->Import
+                        </div>
+
+                    </div>
+                    <div class="portlet-body" style="padding-bottom: 0px !important; padding-top: 0px !important;">
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name"><span class="eu_custom_js_info eu_custom_badge_pending">{{overallStartedpn33}}</span>
+                            </div>
+                            <div class="col-md-8 name">
+                                <span class="eu_custom_text_pending"> Pending </span>
+                            </div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_confirmed"> {{overallCompletedpn33}}</span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_confirmed"> Completed </span></div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_failed"> {{overallfailedpn33}} </span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_failed"> Failed </span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title" style="background-color: #d51d46 !important;">
+                        <div class="caption">
+                            <!-- <i class="fa fa-cogs"></i> -->Dispatch
+                        </div>
+
+                    </div>
+                    <div class="portlet-body" style="padding-bottom: 0px !important; padding-top: 0px !important;">
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_pending"> {{notDispatched}}</span></div>
+                            <div class="col-md-8 name">
+                                <span class="eu_custom_text_pending">Pending</span></div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_confirmed"> {{dispatched}} </span></div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_confirmed">
+                                    Dispatched
+                                </span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title" style="background-color: #c81f45 !important;">
+                        <div class="caption">
+                            <!-- <i class="fa fa-cogs"></i> -->Validate
+                        </div>
+                    </div>
+                    <div class="portlet-body" style="padding-bottom: 0px !important; padding-top: 0px !important;">
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_pending">{{validationpending }}</span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_pending">Pending</span></div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_confirmed">{{validationcompleted}}</span>
+                            </div>
+                            <div class="col-md-8 name">
+                                <span class="eu_custom_text_confirmed">
+                                    Validated
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_unbilled">{{UnbillConsumer}}</span></div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_unbilled">
+                                    Unbilled
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title" style="background-color: #bd2043 !important;">
+                        <div class="caption">
+                            <!-- <i class="fa fa-cogs"></i> -->Upload
+                            <!-- <span class="row static-info eu_custom_static_info"><h4> Last upload June 12 , 2016</h4>
+
+                            </span> -->
+                        </div>
+
+                    </div>
+                    <div class="portlet-body" style="padding-bottom: 0px !important; padding-top: 0px !important;">
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_pending">{{totaluploadpending}}</span>
+                            </div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_pending">
+                                Pending
+                            </span>
+                            </div>
+                        </div>
+                        <div class="row static-info eu_custom_static_info">
+                            <div class="col-md-4 name">
+                                <span class="eu_custom_js_info eu_custom_badge_confirmed">{{uploaded}}</span></div>
+                            <div class="col-md-8 name"><span class="eu_custom_text_confirmed">
+                                    Uploaded
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+
+            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                <div class="portlet yellow-crusta box">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Uploads Recordes
+                            <span class="row static-info"><h4> Last upload June 12 , 2016</h4>
+
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row static-info">
+                            <span class="col-md-5 name" name=""> 1.34 K </span>
+                            <span class="col-md-7 name">
+                                Records ready for upload
+                            </span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="row" style="display: none;">
+            <div class="col-md-6 col-sm-6">
+                <div class="reading">
+                    <!--<a href="index.html">-->
+                    <label class="control-label">Total Reading</label>
+                    <img src="{% static 'assets/mrbd-imgs/dashboard/u134.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="reading">
+                    <!--<a href="index.html">-->
+                    <label class="control-label ">Total Reading</label>
+                    <img src="{% static 'assets/mrbd-imgs/dashboard/u134.png' %}" alt=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

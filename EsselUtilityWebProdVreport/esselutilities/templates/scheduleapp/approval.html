@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Essel|User </title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{%load staticfiles%}
+{% block content %}
+<style type="text/css">
+
+.font-hg font-black-flamingo {
+ height=auto;}
+.page-content-inner {
+ /* width: 1160px;
+  height: auto;
+  position:relative;
+  text-align:left;
+
+
+   padding-top: 10px;
+   padding-right: 10px;
+   padding-bottom: 10px;
+   padding-left:20px;*/
+
+}
+.portlet {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0;
+    border-radius: 2px;
+}
+</style>
+<div class="page-container">
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="row eu_custom_heading">
+            <label class="col-md-12 name eu_custom_pl20" style="margin-bottom: 0px !important;">
+                <h2>Schedule <small> Approver</small></h2>
+            </label>
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE CONTENT BODY -->
+        <div class="page-content eu_custom_validation_page_content">
+            <div class="container eu_custom_validation_container">
+                <!-- BEGIN PAGE BREADCRUMBS -->
+                <div class="row eu_custom_validation_row_nm">
+                    <div class="page-content-wrapper">
+                        <label class="col-md-12"
+                               style="margin-bottom: 30px!important;color: #ed1847 !important;font-size: 14px !important;">
+                            Meter Reading &gt; Schedule &gt; <span style="color: #505050 !important;">Approver</span>
+                        </label>
+
+                        <!-- END PAGE BREADCRUMBS userRoleTbl-->
+                        <div class="portlet light portlet-fit portlet-datatable ">
+                            <div class="portlet-body eu_custom_validation_level_1_portlet_body eu_custom_mt25">
+                                <div class="page-content-inner">
+                                    <div class="portlet-body-main">
+                                        <div class="portlet-body eu_custom_pt0">
+                                            <table class="table table-striped eu_custom_table_no_border"
+                                                   id="approvalTable" style="width: 100%;">
+                                                <thead style="background: #ededed !important;">
+                                                <tr>
+                                                    <th style="width:10%;"> Bill Cycle Code</th>
+                                                    <th style="width:12%;"> Bill Cycle Name</th>
+                                                    <th style="width:10%;"> Schedule Send Date</th>
+                                                    <th style="width:10%;"> Schedule Month</th>
+                                                    <th style="width:10%;"> Action</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                            <!--</div>-->
+                                        </div>
+                                        <!-- End: life time stats -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PAGE CONTENT INNER -->
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT BODY -->
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER -->
+<div class="modal" id="approveChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  eu_custom_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Approve Schedule</h4>
+            </div>
+            <form id="approvalFrm" onkeypress="return event.keyCode != 13;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="font-grey-mint">Bill Cycle Code </label><br>
+                            <span name="pendingBCC" id="pendingBCC"> </span>
+                        </div>
+                    </div>
+                    <div style="font-size: 16px !important; padding-bottom: 20px;">
+                    <span width="16%">
+                        Original Schedule
+                    </span>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col-md-3 ">
+                            <label>Start Date</label><br>
+                            <span name="pendingStartDate"
+                                  id="pendingStartDate"> </span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>End Date </label><br>
+                            <span name="pendingEndDate" id="pendingEndDate"> </span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Accounting Date </label><br>
+                            <span name="pendingAccountingDate" id="pendingAccountingDate"> </span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Estimated Date</label><br>
+                            <span name="pendingEstimatedDate" id="pendingEstimatedDate"> </span>
+                        </div>
+                    </div>
+                    <div style="font-size: 16px !important; padding-bottom: 20px;">
+                    <span width="16%" class="font-red-flamingo">
+                        Change Schedule
+                    </span>
+                    </div>
+                    <input type="hidden" id="approval_id" name="id"/>
+                    <div id="change">
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label> Remark </label>
+                            <span class="required">*</span>
+                            <textarea type="text" name="remark" id="remark"
+                                      placeholder="Remark" class="form-control" required></textarea>
+                            <label class="error" id="remarkLabel" style="color:red; display:none;"> This field is mandatory </label>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="approveHidden" name="approveHidden"/>
+            </form>
+            <div class="modal-footer eu_custom_modal_footer">
+                <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                <button type="button" id="rejectChanges" class="btn btn-danger" style="margin-right: 10px !important;">Reject</button>
+                <button type="submit" id="appoveChanges" class="btn btn-success">Approve</button>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+{% endblock %}
+
+{% block js_block %}
+<script src="{%static 'custom-js/approval.js'%}" type="text/javascript"></script>
+{% endblock %}
+
+</body>
+</html>

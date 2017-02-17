@@ -1,0 +1,164 @@
+{% load staticfiles %}
+{% load uploadFilter %}
+{% load consumerFilter %}
+
+<div class="portlet-body">
+
+
+                                        <input type="hidden" id="totalRecord" value="{{Total}}">
+                                        <input type="hidden" id="totalUploaded" value="{{uploaded}}">
+                                        <input type="hidden" id="totalPending" value="{{pending}}">
+
+                                        {% if totalRecords <= 0 %}
+                                        <div class="tabbable-line">
+                                            <p> There are no schedules defined for this month.</p>
+                                        </div>
+                                        {% else %}
+
+                                        <div class="tabbable-line">
+                                            <div class="row">
+                                                {%for upload in uploadb30 %}
+
+                                                    <div class="col-md-3 testVal col-sm-6"
+                                                         id="{{upload.bill_schedule.bill_cycle.bill_cycle_code}}">
+
+                                                        <div class="portlet yellow-crusta" style="border-radius: 10px !important;background-color: rgb(255, 255, 255);border: 1px solid #B0B0B0">
+
+                                                      {% if upload.status == 'Not Started' %}
+                                                            <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_not_confirmed">
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{upload.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                      class="font-md summary">{{upload.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                                {% elif upload.status == 'Started' %}
+
+                                                        <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_pending">
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{upload.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                     <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                           class="font-md summary">{{upload.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {% elif upload.status == 'Completed' %}
+
+                                                            <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_confirmed">
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{upload.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                       <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                             class="font-md summary">{{upload.status}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {% elif upload.status == 'Failed' %}
+                                                        <div class="portlet-title portlet-border1 eu_custom_porlet_title eu_custom_portlet_title_rejected">
+                                                            <div class="caption eu_custom_porlet_title_caption"
+                                                                 style="padding: 13px;">
+                                                                <label style="font-size: 20px; color: #FFF;">
+                                                                    {{upload.bill_schedule.bill_cycle.bill_cycle_code}}</label>
+                                                            </div>
+                                                            <div class="actions eu_custom_porlet_title_actions">
+                                                                  <span style="font-size: 16px; color: #FFF;padding: 5px 7px;"
+                                                                        class="font-md summary">{{upload.status}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+
+                                                        <div class="portlet-body tls_height">
+
+                                                            <div class="col-md-12 name">
+                                                                    <label style="font-size: 18px;">
+                                                                        <center>{{upload.bill_schedule.bill_cycle.bill_cycle_name}}</center>
+                                                                        <hr class="hrline1" style="margin-left: 0px;"/>
+                                                                    </label>
+                                                                </div>
+
+
+                                                            <div class="row eu_custom_import_static_info ">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Start Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        <b> {{upload|startDate}}</b>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        End Date
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        <b> {{upload|endDate}}</b>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row eu_custom_import_static_info ">
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                       Total Routes
+                                                                    </label>
+                                                                    <br>
+                                                                    <br>
+                                                                    <label class="col-lg-12 value">
+                                                                        <b> {{upload|getTotalRoute}}</b>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 name">
+                                                                    <label class="col-lg-12">
+                                                                        Reading Completed
+                                                                    </label>
+                                                                    <label class="col-lg-12 value">
+                                                                        <b>
+                                                                            <a href="{% url 'upload:open_reading' upload.bill_schedule.id %}">{{upload|getTotalReading}}</a></b>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            {% if upload|getTotalReading > 0 %}
+
+                                                            <div class="row static-info eu_custom_card_bottom">
+                                                                {% if upload|getTotalReading > 0 %}
+                                                                    <div class="col-md-4 name eu_custom_card_bottom_button eu_custom_card_bottom_button_left">
+                                                                        <label class="col-lg-12">
+                                                                        <a class="cpink" href="{% url 'upload:export_b30_excel' upload.id %}">Export</a>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-md-4 name eu_custom_card_bottom_button">
+                                                                        <label class="col-lg-12 ">
+                                                                        <a class="cpink" href="{% url 'upload:get_b30_images' upload.id %}">Images</a>
+                                                                        </label>
+                                                                    </div>
+                                                                    {% if upload.status != 'Completed' and upload.status != 'Started' %}
+                                                                   <div class="col-md-4 name eu_custom_card_bottom_button eu_custom_card_bottom_button_right">
+                                                                       <label class="col-lg-12 ">
+                                                                        <a class="cpink" onclick="upload_b30({{upload.bill_schedule.bill_cycle.id}},{{upload.id}})">Upload</a>
+                                                                       </label>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                                </div>
+                                                            {%endif%}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {%endfor%}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
