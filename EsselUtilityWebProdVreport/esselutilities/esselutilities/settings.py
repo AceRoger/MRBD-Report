@@ -134,7 +134,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mrbd',
+        'NAME': 'mrbd_report',
         'USER':'root',
         'PASSWORD':'root',
         'HOST':'localhost',
